@@ -20,6 +20,21 @@ export default class CanvasDrawer {
     this.resetCanvas();
   }
 
+  textAlignOut(radians){
+    if(this.circle.isInRightQuadrants(radians)){
+      this.ctx.textAlign = "start";
+    }
+    if(this.circle.isInLeftQuadrants(radians)){
+      this.ctx.textAlign = "end";
+    }
+    if(this.circle.isInTopQuadrants(radians)){
+      this.ctx.textBaseline = "bottom";
+    }
+    if(this.circle.isInBottomQuadrants(radians)){
+      this.ctx.textBaseline = "top";
+    }
+  }
+
   drawAngleLine(angle){
     const [lineEndX, lineEndY] = this.circle.circleEndCoords(angle);
     const outputRadians = angle.toFixed(2);
@@ -67,18 +82,7 @@ export default class CanvasDrawer {
 
     // Write angle value
     this.ctx.fillStyle = white;
-    if(this.circle.isInRightQuadrants(angle)){
-      this.ctx.textAlign = "start";
-    }
-    if(this.circle.isInLeftQuadrants(angle)){
-      this.ctx.textAlign = "end";
-    }
-    if(this.circle.isInTopQuadrants(angle)){
-      this.ctx.textBaseline = "bottom";
-    }
-    if(this.circle.isInBottomQuadrants(angle)){
-      this.ctx.textBaseline = "top";
-    }
+    this.textAlignOut(angle);
     this.ctx.fillText(radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
 
     // Write cos values
@@ -125,18 +129,7 @@ export default class CanvasDrawer {
 
     // Write tan values
     this.ctx.textBaseline = "bottom";
-    if(this.circle.isInRightQuadrants(angle)){
-      this.ctx.textAlign = "start";
-    }
-    if(this.circle.isInLeftQuadrants(angle)){
-      this.ctx.textAlign = "end";
-    }
-    if(this.circle.isInTopQuadrants(angle)){
-      this.ctx.textBaseline = "bottom";
-    }
-    if(this.circle.isInBottomQuadrants(angle)){
-      this.ctx.textBaseline = "top";
-    }
+    this.textAlignOut(angle);
     const lineEndXToSecLineEndX = secLineEndX-lineEndX;
     const lineEndYToSecLineEndY = this.circle.centreY-lineEndY;
     if(Math.cos(angle) == 0.0){
@@ -148,18 +141,7 @@ export default class CanvasDrawer {
 
     // Write cotan values
     this.ctx.textBaseline = "bottom";
-    if(this.circle.isInRightQuadrants(angle)){
-      this.ctx.textAlign = "start";
-    }
-    if(this.circle.isInLeftQuadrants(angle)){
-      this.ctx.textAlign = "end";
-    }
-    if(this.circle.isInTopQuadrants(angle)){
-      this.ctx.textBaseline = "bottom";
-    }
-    if(this.circle.isInBottomQuadrants(angle)){
-      this.ctx.textBaseline = "top";
-    }
+    this.textAlignOut(angle);
     const lineEndXToCosecLineEndX = lineEndX-this.circle.centreX;
     const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
     if(Math.sin(angle) == 0.0){
@@ -195,9 +177,9 @@ export default class CanvasDrawer {
         degreeUnitLen = (this.radius / 15);
       }
 
-      const [lineEndX, lineEndY] = this.circle.circleEndCoords(degToRad(i));
-      const lineStartX = this.circle.centreX + (this.radius - degreeUnitLen) * Math.cos(degToRad(i));
-      const lineStartY = this.circle.centreY - (this.radius - degreeUnitLen) * Math.sin(degToRad(i));
+      const radiants = degToRad(i);
+      const [lineEndX, lineEndY] = this.circle.circleEndCoords(radiants);
+      const [lineStartX, lineStartY] = this.circle.circleEndOffsetCoords(radiants, -degreeUnitLen);
 
       this.ctx.beginPath();
       this.ctx.moveTo(lineStartX, lineStartY);
@@ -210,8 +192,7 @@ export default class CanvasDrawer {
     const radianUnitLen = (this.radius / 30);
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
       const [lineStartX, lineStartY] = this.circle.circleEndCoords(i);
-      const lineEndX = this.circle.centreX + (this.radius + radianUnitLen) * Math.cos(i);
-      const lineEndY = this.circle.centreY - (this.radius + radianUnitLen) * Math.sin(i);
+      const [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
 
       this.ctx.beginPath();
       this.ctx.moveTo(lineStartX, lineStartY);
@@ -224,19 +205,19 @@ export default class CanvasDrawer {
     this.ctx.fillStyle = black;
     const degreeUnitValueLen = (this.radius / 15);
     for(let i=0; i<360; i+=10) {
-      const posX = this.circle.centreX + (this.radius - degreeUnitValueLen) * Math.cos(degToRad(i));
-      const posY = this.circle.centreY - (this.radius - degreeUnitValueLen) * Math.sin(degToRad(i));
+      const radiants = degToRad(i);
+      const [posX, posY] = this.circle.circleEndOffsetCoords(radiants, -degreeUnitValueLen);
 
-      if(this.circle.isInRightQuadrants(degToRad(i))){
+      if(this.circle.isInRightQuadrants(radiants)){
         this.ctx.textAlign = "end";
       }
-      if(this.circle.isInLeftQuadrants(degToRad(i))){
+      if(this.circle.isInLeftQuadrants(radiants)){
         this.ctx.textAlign = "start";
       }
-      if(this.circle.isInTopQuadrants(degToRad(i))){
+      if(this.circle.isInTopQuadrants(radiants)){
         this.ctx.textBaseline = "top";
       }
-      if(this.circle.isInBottomQuadrants(degToRad(i))){
+      if(this.circle.isInBottomQuadrants(radiants)){
         this.ctx.textBaseline = "bottom";
       }
       this.ctx.textAlign = "middle";
@@ -251,20 +232,9 @@ export default class CanvasDrawer {
     // Write radian unit values
     this.ctx.fillStyle = grey;
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
-      const posX = this.circle.centreX + (this.radius + radianUnitLen) * Math.cos(i);
-      const posY = this.circle.centreY - (this.radius + radianUnitLen) * Math.sin(i);
-      if(this.circle.isInRightQuadrants(i)){
-        this.ctx.textAlign = "start";
-      }
-      if(this.circle.isInLeftQuadrants(i)){
-        this.ctx.textAlign = "end";
-      }
-      if(this.circle.isInTopQuadrants(i)){
-        this.ctx.textBaseline = "bottom";
-      }
-      if(this.circle.isInBottomQuadrants(i)){
-        this.ctx.textBaseline = "top";
-      }
+      const [posX, posY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
+
+      this.textAlignOut(i);
       this.ctx.fillText(i.toFixed(1), posX, posY);
     }
 

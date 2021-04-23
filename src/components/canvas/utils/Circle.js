@@ -13,6 +13,12 @@ export default class Circle {
     return [posEndX, posEndY];
   }
 
+  circleEndOffsetCoords(radians, offset) {
+    const posEndX = this.centreX + (this.radius + offset) * Math.cos(radians);
+    const posEndY = this.centreY - (this.radius + offset) * Math.sin(radians);
+    return [posEndX, posEndY];
+  }
+
   isInFirstQuadrant(radians){
     return radians >= 0 && radians <= Math.PI/2;
   }
