@@ -6,7 +6,7 @@ class CanvasDrawer {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
-    this.radius = Math.floor(height/2.5);
+    this.radius = Math.floor(height/3);
     this.resetCanvas();
   }
 
@@ -57,34 +57,39 @@ class CanvasDrawer {
     this.ctx.lineWidth = 2;
     this.ctx.fillStyle = "rgb(0, 0, 0)";
 
-    // Draw angle, sin, and cos lines
+    // Draw angle line
     this.ctx.beginPath();
     this.ctx.moveTo(this.width/2, this.height/2);
     this.ctx.lineTo(lineEndX, lineEndY);
+
+    // Draw sin line
     this.ctx.lineTo(lineEndX, this.height/2);
-    this.ctx.lineTo(this.width/2, this.height/2);
+
+    // Draw cos line
+    this.ctx.moveTo(lineEndX, lineEndY);
+    this.ctx.lineTo(this.width/2, lineEndY);
+
+    // Draw sec line
+    const secLineLen = (1/Math.cos(angle)) * this.radius;
+    const secLineEndX = this.width/2 + secLineLen;
+    this.ctx.moveTo(this.width/2, this.height/2);
+    this.ctx.lineTo(secLineEndX, this.height/2);
+
+    // Draw cosec line
+    const cosecLineLen = (1/Math.sin(angle)) * this.radius;
+    const cosecLineEndY = this.height/2 - cosecLineLen;
+    this.ctx.moveTo(this.width/2, this.height/2);
+    this.ctx.lineTo(this.width/2, cosecLineEndY);
+
+    // Draw tan line
+    this.ctx.moveTo(lineEndX, lineEndY);
+    this.ctx.lineTo(secLineEndX, this.height/2);
+
+    // Draw cotan line
+    this.ctx.moveTo(lineEndX, lineEndY);
+    this.ctx.lineTo(this.width/2, cosecLineEndY);
+
     this.ctx.stroke();
-
-    // Write cos values
-    this.ctx.font = "20px Consolas";
-    this.ctx.textAlign = "center";
-    if(angle >= 0 && angle <= Math.PI){
-      this.ctx.textBaseline = "top";
-    }
-    if(angle > Math.PI && angle < 2*Math.PI){
-      this.ctx.textBaseline = "bottom";
-    }
-    this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((this.width/2-lineEndX)/2), this.height/2);
-
-    // Write sin values
-    this.ctx.textBaseline = "middle";
-    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
-      this.ctx.textAlign = "end";
-    }
-    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
-      this.ctx.textAlign = "start";
-    }
-    this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((this.height/2-lineEndY)/2));
 
     // Write angle value
     this.ctx.fillStyle = "rgb(255, 255, 255)";
@@ -100,7 +105,63 @@ class CanvasDrawer {
     if(angle > Math.PI && angle <= 2*Math.PI){
       this.ctx.textBaseline = "top";
     }
-    this.ctx.fillText(outputRadians, lineEndX, lineEndY);
+    this.ctx.fillText(this.radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
+
+    // Write cos values
+    this.ctx.fillStyle = "rgb(0, 0, 0)";
+    this.ctx.font = "20px Consolas";
+    this.ctx.textAlign = "center";
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "top";
+    }
+    if(angle > Math.PI && angle < 2*Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((this.width/2-lineEndX)/2), lineEndY);
+
+    // Write sin values
+    this.ctx.textBaseline = "middle";
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "end";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "start";
+    }
+    this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((this.height/2-lineEndY)/2));
+
+    // Write sec values
+    this.ctx.textAlign = "center";
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "top";
+    }
+    if(angle > Math.PI && angle < 2*Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((this.width/2-secLineEndX)/2), this.height/2);
+
+    // Write cosec values
+    this.ctx.textBaseline = "middle";
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "end";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "start";
+    }
+    this.ctx.fillText((1/Math.sin(angle)).toFixed(2), this.width/2, cosecLineEndY+((this.height/2-cosecLineEndY)/2));
+
+    // Write tan values
+    this.ctx.textBaseline = "bottom";
+    this.ctx.textAlign = "start";
+    const lineEndXToSecLineEndX = secLineEndX-lineEndX;
+    const lineEndYToSecLineEndY = this.height/2-lineEndY;
+    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), this.height/2-lineEndYToSecLineEndY/2);
+
+    // Write cotan values
+    this.ctx.textBaseline = "bottom";
+    this.ctx.textAlign = "start";
+    const lineEndXToCosecLineEndX = lineEndX-this.width/2;
+    const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY;
+    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
   }
 
   resetCanvas() {
