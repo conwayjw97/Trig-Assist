@@ -1,11 +1,9 @@
+import Circle from "./Circle.js";
+
 import {
   degToRad,
-  radToDeg,
-  isInTopQuadrants,
-  isInBottomQuadrants,
-  isInRightQuadrants,
-  isInLeftQuadrants
-} from "./AngleCalc.js";
+  radToDeg
+} from "./angleCalc.js";
 
 const white = "rgb(255, 255, 255)";
 const green = "rgb(36, 173, 48)";
@@ -18,12 +16,12 @@ export default class CanvasDrawer {
     this.width = width;
     this.height = height;
     this.radius = Math.floor(height/3);
+    this.circle = new Circle(this.width/2, this.height/2, this.width, this.height, this.radius);
     this.resetCanvas();
   }
 
   drawAngleLine(angle){
-    const lineEndX = this.width/2 + this.radius * Math.cos(angle);
-    const lineEndY = this.height/2 - this.radius * Math.sin(angle);
+    const [lineEndX, lineEndY] = this.circle.circleEndCoords(angle);
     const outputRadians = angle.toFixed(2);
 
     this.ctx.lineWidth = 2;
@@ -69,16 +67,16 @@ export default class CanvasDrawer {
 
     // Write angle value
     this.ctx.fillStyle = white;
-    if(isInRightQuadrants(angle)){
+    if(this.circle.isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(isInLeftQuadrants(angle)){
+    if(this.circle.isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(isInTopQuadrants(angle)){
+    if(this.circle.isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(isInBottomQuadrants(angle)){
+    if(this.circle.isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
     this.ctx.fillText(radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
@@ -87,56 +85,56 @@ export default class CanvasDrawer {
     this.ctx.fillStyle = green;
     this.ctx.font = "20px Consolas";
     this.ctx.textAlign = "center";
-    if(isInTopQuadrants(angle)){
+    if(this.circle.isInTopQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
-    if(isInBottomQuadrants(angle)){
+    if(this.circle.isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
     this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((this.width/2-lineEndX)/2), lineEndY);
 
     // Write sin values
     this.ctx.textBaseline = "middle";
-    if(isInRightQuadrants(angle)){
+    if(this.circle.isInRightQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(isInLeftQuadrants(angle)){
+    if(this.circle.isInLeftQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
     this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((this.height/2-lineEndY)/2));
 
     // Write sec values
     this.ctx.textAlign = "center";
-    if(isInTopQuadrants(angle)){
+    if(this.circle.isInTopQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
-    if(isInBottomQuadrants(angle)){
+    if(this.circle.isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
     this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((this.width/2-secLineEndX)/2), this.height/2);
 
     // Write cosec values
     this.ctx.textBaseline = "middle";
-    if(isInRightQuadrants(angle)){
+    if(this.circle.isInRightQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(isInLeftQuadrants(angle)){
+    if(this.circle.isInLeftQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
     this.ctx.fillText((1/Math.sin(angle)).toFixed(2), this.width/2, cosecLineEndY+((this.height/2-cosecLineEndY)/2));
 
     // Write tan values
     this.ctx.textBaseline = "bottom";
-    if(isInRightQuadrants(angle)){
+    if(this.circle.isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(isInLeftQuadrants(angle)){
+    if(this.circle.isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(isInTopQuadrants(angle)){
+    if(this.circle.isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(isInBottomQuadrants(angle)){
+    if(this.circle.isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
     const lineEndXToSecLineEndX = secLineEndX-lineEndX;
@@ -150,16 +148,16 @@ export default class CanvasDrawer {
 
     // Write cotan values
     this.ctx.textBaseline = "bottom";
-    if(isInRightQuadrants(angle)){
+    if(this.circle.isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(isInLeftQuadrants(angle)){
+    if(this.circle.isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(isInTopQuadrants(angle)){
+    if(this.circle.isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(isInBottomQuadrants(angle)){
+    if(this.circle.isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
     const lineEndXToCosecLineEndX = lineEndX-this.width/2;
@@ -188,8 +186,7 @@ export default class CanvasDrawer {
     this.ctx.strokeStyle = black;
     for(let i=0; i<360; i+=1) {
       let degreeUnitLen = (this.radius / 30);
-      const lineEndX = this.width/2 + this.radius * Math.cos(degToRad(i));
-      const lineEndY = this.height/2 - this.radius * Math.sin(degToRad(i));
+      const [lineEndX, lineEndY] = this.circle.circleEndCoords(i);
 
       // Based on the midpoint formula, get a coordinate r/30 units away from
       // the end coordinate on the line between the centre and end coordinate
@@ -214,8 +211,7 @@ export default class CanvasDrawer {
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
       const lineEndX = this.width/2 + (this.radius + radianUnitLen) * Math.cos(i);
       const lineEndY = this.height/2 - (this.radius + radianUnitLen) * Math.sin(i);
-      const lineStartX = this.width/2 + this.radius * Math.cos(i);
-      const lineStartY = this.height/2 - this.radius * Math.sin(i);
+      const [lineStartX, lineStartY] = this.circle.circleEndCoords(i);
 
       this.ctx.beginPath();
       this.ctx.moveTo(lineStartX, lineStartY);
@@ -231,16 +227,16 @@ export default class CanvasDrawer {
       const posX = this.width/2 + (this.radius - degreeUnitValueLen) * Math.cos(degToRad(i));
       const posY = this.height/2 - (this.radius - degreeUnitValueLen) * Math.sin(degToRad(i));
 
-      if(isInRightQuadrants(degToRad(i))){
+      if(this.circle.isInRightQuadrants(degToRad(i))){
         this.ctx.textAlign = "end";
       }
-      if(isInLeftQuadrants(degToRad(i))){
+      if(this.circle.isInLeftQuadrants(degToRad(i))){
         this.ctx.textAlign = "start";
       }
-      if(isInTopQuadrants(degToRad(i))){
+      if(this.circle.isInTopQuadrants(degToRad(i))){
         this.ctx.textBaseline = "top";
       }
-      if(isInBottomQuadrants(degToRad(i))){
+      if(this.circle.isInBottomQuadrants(degToRad(i))){
         this.ctx.textBaseline = "bottom";
       }
       this.ctx.textAlign = "middle";
@@ -257,16 +253,16 @@ export default class CanvasDrawer {
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
       const posX = this.width/2 + (this.radius + radianUnitLen) * Math.cos(i);
       const posY = this.height/2 - (this.radius + radianUnitLen) * Math.sin(i);
-      if(isInRightQuadrants(i)){
+      if(this.circle.isInRightQuadrants(i)){
         this.ctx.textAlign = "start";
       }
-      if(isInLeftQuadrants(i)){
+      if(this.circle.isInLeftQuadrants(i)){
         this.ctx.textAlign = "end";
       }
-      if(isInTopQuadrants(i)){
+      if(this.circle.isInTopQuadrants(i)){
         this.ctx.textBaseline = "bottom";
       }
-      if(isInBottomQuadrants(i)){
+      if(this.circle.isInBottomQuadrants(i)){
         this.ctx.textBaseline = "top";
       }
       this.ctx.fillText(i.toFixed(1), posX, posY);
