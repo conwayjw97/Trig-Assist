@@ -54,6 +54,40 @@ class CanvasDrawer {
     const lineEndY = this.height/2 - this.radius * Math.sin(angle);
     const outputRadians = angle.toFixed(2);
 
+    this.ctx.lineWidth = 2;
+    this.ctx.fillStyle = "rgb(0, 0, 0)";
+
+    // Draw angle, sin, and cos lines
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.width/2, this.height/2);
+    this.ctx.lineTo(lineEndX, lineEndY);
+    this.ctx.lineTo(lineEndX, this.height/2);
+    this.ctx.lineTo(this.width/2, this.height/2);
+    this.ctx.stroke();
+
+    // Write cos values
+    this.ctx.font = "20px Consolas";
+    this.ctx.textAlign = "center";
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "top";
+    }
+    if(angle > Math.PI && angle < 2*Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((this.width/2-lineEndX)/2), this.height/2);
+
+    // Write sin values
+    this.ctx.textBaseline = "middle";
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "end";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "start";
+    }
+    this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((this.height/2-lineEndY)/2));
+
+    // Write angle value
+    this.ctx.fillStyle = "rgb(255, 255, 255)";
     if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
       this.ctx.textAlign = "start";
     }
@@ -66,17 +100,6 @@ class CanvasDrawer {
     if(angle > Math.PI && angle <= 2*Math.PI){
       this.ctx.textBaseline = "top";
     }
-
-    this.ctx.lineWidth = 1;
-    this.ctx.fillStyle = "rgb(0, 0, 0)";
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.width/2, this.height/2);
-    this.ctx.lineTo(lineEndX, lineEndY);
-    this.ctx.stroke();
-
-    this.ctx.fillStyle = "rgb(255, 255, 255)";
-    this.ctx.font = "20px Consolas";
     this.ctx.fillText(outputRadians, lineEndX, lineEndY);
   }
 
@@ -93,7 +116,7 @@ class CanvasDrawer {
     this.ctx.fill();
 
     // Draw axis lines
-    this.ctx.lineWidth = 2;
+    this.ctx.lineWidth = 1;
     this.ctx.fillStyle = "rgb(0, 0, 0)";
 
     this.ctx.beginPath();
@@ -107,18 +130,18 @@ class CanvasDrawer {
     this.ctx.stroke();
 
     // Draw quadtrants
-    this.ctx.fillStyle = "rgb(0, 0, 0)";
-    this.ctx.font = "20px Consolas";
-    this.ctx.textAlign = "start";
-    this.ctx.textBaseline = "bottom";
-    this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
-    this.ctx.textAlign = "end";
-    this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
-    this.ctx.textAlign = "end";
-    this.ctx.textBaseline = "top";
-    this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
-    this.ctx.textAlign = "start";
-    this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
+    // this.ctx.fillStyle = "rgb(0, 0, 0)";
+    // this.ctx.font = "20px Consolas";
+    // this.ctx.textAlign = "start";
+    // this.ctx.textBaseline = "bottom";
+    // this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
+    // this.ctx.textAlign = "end";
+    // this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
+    // this.ctx.textAlign = "end";
+    // this.ctx.textBaseline = "top";
+    // this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
+    // this.ctx.textAlign = "start";
+    // this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
   }
 
   onMouseMove(e){
