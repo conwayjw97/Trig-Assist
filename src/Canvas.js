@@ -1,61 +1,66 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Canvas.css';
 
-function degToRad(degrees) {
-  return degrees * Math.PI / 180;
-};
+class CanvasDrawer {
+  constructor(ctx, width, height) {
+    this.ctx = ctx;
+    this.width = width;
+    this.height = height;
+    this.radius = Math.floor(height/2.5);
+  }
 
-function setupCanvas(ctx, width, height, radius) {
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.beginPath();
-  ctx.arc(width/2, height/2, radius, degToRad(0), degToRad(360), false);
-  ctx.fill();
+  degToRad(degrees) {
+    return degrees * Math.PI / 180;
+  }
 
-  ctx.lineWidth = 2;
+  drawDegreeLine(degree){
+    this.ctx.lineWidth = 1;
 
-  ctx.fillStyle = 'rgb(255, 255, 255)';
-  ctx.beginPath();
-  ctx.moveTo(width/2-radius, height/2);
-  ctx.lineTo(width/2+radius, height/2);
-  ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.width/2, this.height/2);
+    this.ctx.lineTo(this.width/2 + this.radius * Math.cos(this.degToRad(degree)), this.height/2 - this.radius * Math.sin(this.degToRad(degree)));
+    this.ctx.stroke();
+  }
 
-  ctx.beginPath();
-  ctx.moveTo(width/2, height/2-radius);
-  ctx.lineTo(width/2, height/2+radius);
-  ctx.stroke();
+  setupCanvas() {
+    this.ctx.fillStyle = 'rgb(255, 255, 255)';
+    this.ctx.beginPath();
+    this.ctx.arc(this.width/2, this.height/2, this.radius, this.degToRad(0), this.degToRad(360), false);
+    this.ctx.fill();
 
-  ctx.lineWidth = 1;
+    this.ctx.lineWidth = 2;
 
-  ctx.beginPath();
-  ctx.moveTo(width/2, height/2);
-  ctx.lineTo(width/2 + radius * Math.cos(degToRad(30)), height/2 - radius * Math.sin(degToRad(30)));
-  ctx.stroke();
+    this.ctx.fillStyle = 'rgb(255, 255, 255)';
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.width/2-this.radius, this.height/2);
+    this.ctx.lineTo(this.width/2+this.radius, this.height/2);
+    this.ctx.stroke();
 
-  ctx.beginPath();
-  ctx.moveTo(width/2, height/2);
-  ctx.lineTo(width/2 + radius * Math.cos(degToRad(45)), height/2 - radius * Math.sin(degToRad(45)));
-  ctx.stroke();
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.width/2, this.height/2-this.radius);
+    this.ctx.lineTo(this.width/2, this.height/2+this.radius);
+    this.ctx.stroke();
 
-  ctx.beginPath();
-  ctx.moveTo(width/2, height/2);
-  ctx.lineTo(width/2 + radius * Math.cos(degToRad(60)), height/2 - radius * Math.sin(degToRad(60)));
-  ctx.stroke();
-}
+    this.drawDegreeLine(30);
+    this.drawDegreeLine(45);
+    this.drawDegreeLine(60);
+  }
 
-function onMouseMove(e, ctx, width, height, radius){
+  onMouseMove(e){
+  }
 }
 
 function Canvas() {
   const canvasRef = useRef(null);
   const width = window.innerWidth;
   const height = window.innerHeight;
-  const radius = Math.floor(height/2.5);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    canvas.onmousemove = e => onMouseMove(e, ctx, width, height, radius);
-    setupCanvas(ctx, width, height, radius);
+    const canvasDrawer = new CanvasDrawer(ctx, width, height);
+    canvas.onmousemove = e => canvasDrawer.onMouseMove(e);
+    canvasDrawer.setupCanvas();
   }, []);
 
   return (
