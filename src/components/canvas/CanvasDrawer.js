@@ -229,7 +229,7 @@ export default class CanvasDrawer {
     this.ctx.lineTo(circleCentreX, circleCentreY+this.radius);
     this.ctx.stroke();
 
-    // Draw degree units
+    // Draw degree units lines
     this.ctx.strokeStyle = black;
     const degreeUnitLen = (this.radius / 30);
     for(let i=0; i<360; i+=5) {
@@ -238,7 +238,7 @@ export default class CanvasDrawer {
 
       // Based on the midpoint formula, get a coordinate r/30 units away from
       // the end coordinate on the line between the centre and end coordinate
-      const lineStartX = lineEndX + (degreeUnitLen / this.radius) * (this.width/2 - lineEndX);
+      const lineStartX = lineEndX + (degreeUnitLen / this.radius) * (this.width/2 - lineEndX); // WTF???
       const lineStartY = lineEndY + (degreeUnitLen / this.radius) * (this.height/2 - lineEndY);
 
       this.ctx.beginPath();
@@ -247,7 +247,7 @@ export default class CanvasDrawer {
       this.ctx.stroke();
     }
 
-    // Draw radian units
+    // Draw radian unit lines
     this.ctx.strokeStyle = white;
     const radianUnitLen = (this.radius / 30);
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
@@ -262,12 +262,60 @@ export default class CanvasDrawer {
       this.ctx.stroke();
     }
 
+    // Write degree unit values
+    this.ctx.font = "12.5px Consolas";
+    this.ctx.fillStyle = black;
+    for(let i=0; i<360; i+=5) {
+      const posX = this.width/2 + (this.radius - degreeUnitLen) * Math.cos(this.degToRad(i));
+      const posY = this.height/2 - (this.radius - degreeUnitLen) * Math.sin(this.degToRad(i));
+
+      // if(this.isInRightQuadrants(this.degToRad(i))){
+      //   this.ctx.textAlign = "end";
+      // }
+      // if(this.isInLeftQuadrants(this.degToRad(i))){
+      //   this.ctx.textAlign = "start";
+      // }
+      // if(this.isInTopQuadrants(this.degToRad(i))){
+      //   this.ctx.textBaseline = "top";
+      // }
+      // if(this.isInBottomQuadrants(this.degToRad(i))){
+      //   this.ctx.textBaseline = "bottom";
+      // }
+      // this.ctx.textAlign = "middle";
+      // this.ctx.textBaseline = "centre";
+      //
+      // console.log(this.ctx.textAlign);
+      // console.log(this.ctx.textBaseline);
+      //
+      // this.ctx.fillText(i, posX, posY);
+    }
+
+    // Write radian unit values
+    this.ctx.fillStyle = grey;
+    for(let i=0.0; i<(2*Math.PI); i+=0.1) {
+      const posX = this.width/2 + (this.radius + radianUnitLen) * Math.cos(i);
+      const posY = this.height/2 - (this.radius + radianUnitLen) * Math.sin(i);
+      if(this.isInRightQuadrants(i)){
+        this.ctx.textAlign = "start";
+      }
+      if(this.isInLeftQuadrants(i)){
+        this.ctx.textAlign = "end";
+      }
+      if(this.isInTopQuadrants(i)){
+        this.ctx.textBaseline = "bottom";
+      }
+      if(this.isInBottomQuadrants(i)){
+        this.ctx.textBaseline = "top";
+      }
+      this.ctx.fillText(i.toFixed(1), posX, posY);
+    }
+
     // Write Pi
     this.ctx.fillStyle = grey;
     this.ctx.font = "20px Consolas";
     this.ctx.textAlign = "start";
     this.ctx.textBaseline = "middle";
-    this.ctx.fillText("0 or 2π", this.width/2 + this.radius + (radianUnitLen * 2), this.height/2);
+    this.ctx.fillText("0 & 2π", this.width/2 + this.radius + (radianUnitLen * 2), this.height/2);
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "bottom";
     this.ctx.fillText("π/2", this.width/2, this.height/2 - this.radius - (radianUnitLen * 2));
