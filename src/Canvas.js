@@ -18,37 +18,6 @@ class CanvasDrawer {
     return radians * 180 / Math.PI;
   }
 
-  drawDegreeLine(degree){
-    const lineEndX = this.width/2 + this.radius * Math.cos(this.degToRad(degree));
-    const lineEndY = this.height/2 - this.radius * Math.sin(this.degToRad(degree));
-    const outputDegree = degree.toFixed(2) + "°";
-
-    if((degree >= 0 && degree <= 90) || (degree >= 270 && degree <= 360)){
-      this.ctx.textAlign = "start";
-    }
-    if(degree > 90 && degree < 270){
-      this.ctx.textAlign = "end";
-    }
-    if(degree >= 0 && degree <= 180){
-      this.ctx.textBaseline = "bottom";
-    }
-    if(degree > 180 && degree <= 360){
-      this.ctx.textBaseline = "top";
-    }
-
-    this.ctx.lineWidth = 1;
-    this.ctx.fillStyle = "rgb(0, 0, 0)";
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(this.width/2, this.height/2);
-    this.ctx.lineTo(lineEndX, lineEndY);
-    this.ctx.stroke();
-
-    this.ctx.fillStyle = "rgb(255, 255, 255)";
-    this.ctx.font = "20px Consolas";
-    this.ctx.fillText(outputDegree, lineEndX, lineEndY);
-  }
-
   drawRadianLine(angle){
     const lineEndX = this.width/2 + this.radius * Math.cos(angle);
     const lineEndY = this.height/2 - this.radius * Math.sin(angle);
@@ -151,17 +120,50 @@ class CanvasDrawer {
 
     // Write tan values
     this.ctx.textBaseline = "bottom";
-    this.ctx.textAlign = "start";
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "start";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "end";
+    }
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    if(angle > Math.PI && angle <= 2*Math.PI){
+      this.ctx.textBaseline = "top";
+    }
     const lineEndXToSecLineEndX = secLineEndX-lineEndX;
     const lineEndYToSecLineEndY = this.height/2-lineEndY;
-    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), this.height/2-lineEndYToSecLineEndY/2);
+    if(Math.cos(angle).toFixed(2) == 0.00){
+      this.ctx.fillText("∞", lineEndX+(lineEndXToSecLineEndX/2), this.height/2-lineEndYToSecLineEndY/2);
+    }
+    else{
+      this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), this.height/2-lineEndYToSecLineEndY/2);
+    }
 
     // Write cotan values
     this.ctx.textBaseline = "bottom";
-    this.ctx.textAlign = "start";
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "start";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "end";
+    }
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    if(angle > Math.PI && angle <= 2*Math.PI){
+      this.ctx.textBaseline = "top";
+    }
     const lineEndXToCosecLineEndX = lineEndX-this.width/2;
-    const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY;
-    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+    const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
+    // console.log(Math.sin(angle).toFixed(2));
+    if(Math.sin(angle).toFixed(2) == -0.00){
+      this.ctx.fillText("∞", lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+    }
+    else{
+      this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+    };
   }
 
   resetCanvas() {
@@ -191,18 +193,18 @@ class CanvasDrawer {
     this.ctx.stroke();
 
     // Draw quadtrants
-    // this.ctx.fillStyle = "rgb(0, 0, 0)";
-    // this.ctx.font = "20px Consolas";
-    // this.ctx.textAlign = "start";
-    // this.ctx.textBaseline = "bottom";
-    // this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
-    // this.ctx.textAlign = "end";
-    // this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
-    // this.ctx.textAlign = "end";
-    // this.ctx.textBaseline = "top";
-    // this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
-    // this.ctx.textAlign = "start";
-    // this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
+    this.ctx.fillStyle = "rgb(0, 0, 0)";
+    this.ctx.font = "20px Consolas";
+    this.ctx.textAlign = "start";
+    this.ctx.textBaseline = "bottom";
+    this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
+    this.ctx.textAlign = "end";
+    this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
+    this.ctx.textAlign = "end";
+    this.ctx.textBaseline = "top";
+    this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
+    this.ctx.textAlign = "start";
+    this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
   }
 
   onMouseMove(e){
@@ -226,7 +228,6 @@ class CanvasDrawer {
         angle = (Math.PI * 2) + angle;
       }
 
-      // this.drawDegreeLine(this.radToDeg(angle));
       this.drawRadianLine(angle);
     }
   }
