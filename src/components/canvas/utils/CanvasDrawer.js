@@ -183,6 +183,7 @@ export default class CanvasDrawer {
     this.ctx.fill();
 
     // Draw degree units lines
+    this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = black;
     for(let i=0; i<360; i+=1) {
       let degreeUnitLen = (this.radius / 30);
@@ -285,7 +286,6 @@ export default class CanvasDrawer {
     this.ctx.fillText("3π/2", this.width/2, this.height/2 + this.radius + (radianUnitLen * 4));
 
     // Draw axis lines
-    this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = black;
 
     this.ctx.beginPath();
