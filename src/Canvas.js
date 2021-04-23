@@ -15,14 +15,14 @@ class CanvasDrawer {
   }
 
   radToDeg(radians) {
-    return -(radians * 180 / Math.PI);
+    return radians * 180 / Math.PI;
   }
 
   drawDegreeLine(degree){
     const lineEndX = this.width/2 + this.radius * Math.cos(this.degToRad(degree));
     const lineEndY = this.height/2 - this.radius * Math.sin(this.degToRad(degree));
     const outputDegree = degree.toFixed(2) + "°";
-    let yOffset = 0;
+
     if((degree >= 0 && degree <= 90) || (degree >= 270 && degree <= 360)){
       this.ctx.textAlign = "start";
     }
@@ -46,7 +46,38 @@ class CanvasDrawer {
 
     this.ctx.fillStyle = "rgb(255, 255, 255)";
     this.ctx.font = "20px Consolas";
-    this.ctx.fillText(outputDegree, lineEndX, lineEndY+yOffset);
+    this.ctx.fillText(outputDegree, lineEndX, lineEndY);
+  }
+
+  drawRadianLine(angle){
+    const lineEndX = this.width/2 + this.radius * Math.cos(angle);
+    const lineEndY = this.height/2 - this.radius * Math.sin(angle);
+    const outputRadians = angle.toFixed(2);
+
+    if((angle >= 0 && angle <= Math.PI/2) || (angle >= (3*Math.PI)/2 && angle <= 2*Math.PI)){
+      this.ctx.textAlign = "start";
+    }
+    if(angle > Math.PI/2 && angle < (3*Math.PI)/2){
+      this.ctx.textAlign = "end";
+    }
+    if(angle >= 0 && angle <= Math.PI){
+      this.ctx.textBaseline = "bottom";
+    }
+    if(angle > Math.PI && angle <= 2*Math.PI){
+      this.ctx.textBaseline = "top";
+    }
+
+    this.ctx.lineWidth = 1;
+    this.ctx.fillStyle = "rgb(0, 0, 0)";
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.width/2, this.height/2);
+    this.ctx.lineTo(lineEndX, lineEndY);
+    this.ctx.stroke();
+
+    this.ctx.fillStyle = "rgb(255, 255, 255)";
+    this.ctx.font = "20px Consolas";
+    this.ctx.fillText(outputRadians, lineEndX, lineEndY);
   }
 
   resetCanvas() {
@@ -102,16 +133,17 @@ class CanvasDrawer {
 
       let diffX = mouseX - circleCentreX;
       let diffY = mouseY - circleCentreY;
-      let angle = this.radToDeg(Math.atan2(diffY, diffX));
+      let angle = -Math.atan2(diffY, diffX);
 
-      // The atan2 function returns negative degree values below 0, we want to show
-      // the degrees in the range of [0, 360] so if the degree is negative then
-      // just extract it from 360
+      // The atan2 function returns negative radian values below 0, we want to show
+      // the degrees in the range of [0, 2*Math.PI] so if the degree is negative then
+      // just extract it from 2*Math.PI
       if(angle < 0){
-        angle = 360 + angle;
+        angle = (Math.PI * 2) + angle;
       }
 
-      this.drawDegreeLine(angle);
+      // this.drawDegreeLine(this.radToDeg(angle));
+      this.drawRadianLine(angle);
     }
   }
 }
