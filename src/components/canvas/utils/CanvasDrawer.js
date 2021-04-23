@@ -187,7 +187,7 @@ export default class CanvasDrawer {
     this.ctx.strokeStyle = black;
     for(let i=0; i<360; i+=1) {
       let degreeUnitLen = (this.radius / 30);
-      const [lineEndX, lineEndY] = this.circle.circleEndCoords(i);
+      const [lineEndX, lineEndY] = this.circle.circleEndCoords(degToRad(i));
 
       // Based on the midpoint formula, get a coordinate r/30 units away from
       // the end coordinate on the line between the centre and end coordinate
