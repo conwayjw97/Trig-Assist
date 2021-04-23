@@ -1,6 +1,7 @@
 const white = "rgb(255, 255, 255)";
 const green = "rgb(35, 158, 45)";
 const black = "rgb(40, 44, 52)";
+const grey = "rgb(135, 135, 135)";
 
 export default class CanvasDrawer {
   constructor(ctx, width, height) {
@@ -229,20 +230,53 @@ export default class CanvasDrawer {
     this.ctx.stroke();
 
     // Draw degree units
-    for (let i = 0; i < 360; i+=5) {
+    this.ctx.strokeStyle = black;
+    const degreeUnitLen = (this.radius / 30);
+    for(let i=0; i<360; i+=5) {
       const lineEndX = this.width/2 + this.radius * Math.cos(this.degToRad(i));
       const lineEndY = this.height/2 - this.radius * Math.sin(this.degToRad(i));
 
-      // Based on the midpoint formula, get a coordinate r/20 units away from
+      // Based on the midpoint formula, get a coordinate r/30 units away from
       // the end coordinate on the line between the centre and end coordinate
-      const lineStartX = lineEndX + ((this.radius / 20) / this.radius) * (this.width/2 - lineEndX);
-      const lineStartY = lineEndY + ((this.radius / 20) / this.radius) * (this.height/2 - lineEndY);
+      const lineStartX = lineEndX + (degreeUnitLen / this.radius) * (this.width/2 - lineEndX);
+      const lineStartY = lineEndY + (degreeUnitLen / this.radius) * (this.height/2 - lineEndY);
 
       this.ctx.beginPath();
       this.ctx.moveTo(lineStartX, lineStartY);
       this.ctx.lineTo(lineEndX, lineEndY);
       this.ctx.stroke();
     }
+
+    // Draw radian units
+    this.ctx.strokeStyle = white;
+    const radianUnitLen = (this.radius / 30);
+    for(let i=0.0; i<(2*Math.PI); i+=0.1) {
+      const lineEndX = this.width/2 + (this.radius + radianUnitLen) * Math.cos(i);
+      const lineEndY = this.height/2 - (this.radius + radianUnitLen) * Math.sin(i);
+      const lineStartX = this.width/2 + this.radius * Math.cos(i);
+      const lineStartY = this.height/2 - this.radius * Math.sin(i);
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(lineStartX, lineStartY);
+      this.ctx.lineTo(lineEndX, lineEndY);
+      this.ctx.stroke();
+    }
+
+    // Write Pi
+    this.ctx.fillStyle = grey;
+    this.ctx.font = "20px Consolas";
+    this.ctx.textAlign = "start";
+    this.ctx.textBaseline = "middle";
+    this.ctx.fillText("0 or 2π", this.width/2 + this.radius + (radianUnitLen * 2), this.height/2);
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "bottom";
+    this.ctx.fillText("π/2", this.width/2, this.height/2 - this.radius - (radianUnitLen * 2));
+    this.ctx.textAlign = "end";
+    this.ctx.textBaseline = "middle";
+    this.ctx.fillText("π", this.width/2 - this.radius - (radianUnitLen * 2), this.height/2);
+    this.ctx.textAlign = "center";
+    this.ctx.textBaseline = "top";
+    this.ctx.fillText("3π/2", this.width/2, this.height/2 + this.radius + (radianUnitLen * 2));
 
     // Write quadtrants
     this.ctx.fillStyle = black;
