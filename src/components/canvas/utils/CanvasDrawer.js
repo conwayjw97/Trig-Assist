@@ -1,5 +1,14 @@
+import {
+  degToRad,
+  radToDeg,
+  isInTopQuadrants,
+  isInBottomQuadrants,
+  isInRightQuadrants,
+  isInLeftQuadrants
+} from "./AngleCalc.js";
+
 const white = "rgb(255, 255, 255)";
-const green = "rgb(35, 158, 45)";
+const green = "rgb(36, 173, 48)";
 const black = "rgb(40, 44, 52)";
 const grey = "rgb(135, 135, 135)";
 
@@ -10,46 +19,6 @@ export default class CanvasDrawer {
     this.height = height;
     this.radius = Math.floor(height/3);
     this.resetCanvas();
-  }
-
-  degToRad(degrees) {
-    return degrees * Math.PI / 180;
-  }
-
-  radToDeg(radians) {
-    return radians * 180 / Math.PI;
-  }
-
-  isInFirstQuadrant(angle){
-    return angle >= 0 && angle <= Math.PI/2;
-  }
-
-  isInSecondQuadrant(angle){
-    return angle > Math.PI/2 && angle <= Math.PI;
-  }
-
-  isInThirdQuadrant(angle){
-    return angle > Math.PI && angle <= (3*Math.PI)/2;
-  }
-
-  isInFourthQuadrant(angle){
-    return angle > (3*Math.PI)/2 && angle <= 2*Math.PI;
-  }
-
-  isInTopQuadrants(angle){
-    return this.isInFirstQuadrant(angle) || this.isInSecondQuadrant(angle);
-  }
-
-  isInBottomQuadrants(angle){
-    return this.isInThirdQuadrant(angle) || this.isInFourthQuadrant(angle);
-  }
-
-  isInRightQuadrants(angle){
-    return this.isInFirstQuadrant(angle) || this.isInFourthQuadrant(angle);
-  }
-
-  isInLeftQuadrants(angle){
-    return this.isInSecondQuadrant(angle) || this.isInThirdQuadrant(angle);
   }
 
   drawAngleLine(angle){
@@ -100,74 +69,74 @@ export default class CanvasDrawer {
 
     // Write angle value
     this.ctx.fillStyle = white;
-    if(this.isInRightQuadrants(angle)){
+    if(isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(this.isInLeftQuadrants(angle)){
+    if(isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(this.isInTopQuadrants(angle)){
+    if(isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(this.isInBottomQuadrants(angle)){
+    if(isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
-    this.ctx.fillText(this.radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
+    this.ctx.fillText(radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
 
     // Write cos values
     this.ctx.fillStyle = green;
     this.ctx.font = "20px Consolas";
     this.ctx.textAlign = "center";
-    if(this.isInTopQuadrants(angle)){
+    if(isInTopQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
-    if(this.isInBottomQuadrants(angle)){
+    if(isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
     this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((this.width/2-lineEndX)/2), lineEndY);
 
     // Write sin values
     this.ctx.textBaseline = "middle";
-    if(this.isInRightQuadrants(angle)){
+    if(isInRightQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(this.isInLeftQuadrants(angle)){
+    if(isInLeftQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
     this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((this.height/2-lineEndY)/2));
 
     // Write sec values
     this.ctx.textAlign = "center";
-    if(this.isInTopQuadrants(angle)){
+    if(isInTopQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
-    if(this.isInBottomQuadrants(angle)){
+    if(isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
     this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((this.width/2-secLineEndX)/2), this.height/2);
 
     // Write cosec values
     this.ctx.textBaseline = "middle";
-    if(this.isInRightQuadrants(angle)){
+    if(isInRightQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(this.isInLeftQuadrants(angle)){
+    if(isInLeftQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
     this.ctx.fillText((1/Math.sin(angle)).toFixed(2), this.width/2, cosecLineEndY+((this.height/2-cosecLineEndY)/2));
 
     // Write tan values
     this.ctx.textBaseline = "bottom";
-    if(this.isInRightQuadrants(angle)){
+    if(isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(this.isInLeftQuadrants(angle)){
+    if(isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(this.isInTopQuadrants(angle)){
+    if(isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(this.isInBottomQuadrants(angle)){
+    if(isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
     const lineEndXToSecLineEndX = secLineEndX-lineEndX;
@@ -181,16 +150,16 @@ export default class CanvasDrawer {
 
     // Write cotan values
     this.ctx.textBaseline = "bottom";
-    if(this.isInRightQuadrants(angle)){
+    if(isInRightQuadrants(angle)){
       this.ctx.textAlign = "start";
     }
-    if(this.isInLeftQuadrants(angle)){
+    if(isInLeftQuadrants(angle)){
       this.ctx.textAlign = "end";
     }
-    if(this.isInTopQuadrants(angle)){
+    if(isInTopQuadrants(angle)){
       this.ctx.textBaseline = "bottom";
     }
-    if(this.isInBottomQuadrants(angle)){
+    if(isInBottomQuadrants(angle)){
       this.ctx.textBaseline = "top";
     }
     const lineEndXToCosecLineEndX = lineEndX-this.width/2;
@@ -212,33 +181,25 @@ export default class CanvasDrawer {
 
     this.ctx.fillStyle = "rgb(255, 255, 255)";
     this.ctx.beginPath();
-    this.ctx.arc(circleCentreX, circleCentreY, this.radius, this.degToRad(0), this.degToRad(360), false);
+    this.ctx.arc(circleCentreX, circleCentreY, this.radius, degToRad(0), degToRad(360), false);
     this.ctx.fill();
-
-    // Draw axis lines
-    this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = black;
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(circleCentreX-this.radius, circleCentreY);
-    this.ctx.lineTo(circleCentreX+this.radius, circleCentreY);
-    this.ctx.stroke();
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(circleCentreX, circleCentreY-this.radius);
-    this.ctx.lineTo(circleCentreX, circleCentreY+this.radius);
-    this.ctx.stroke();
 
     // Draw degree units lines
     this.ctx.strokeStyle = black;
-    const degreeUnitLen = (this.radius / 30);
-    for(let i=0; i<360; i+=5) {
-      const lineEndX = this.width/2 + this.radius * Math.cos(this.degToRad(i));
-      const lineEndY = this.height/2 - this.radius * Math.sin(this.degToRad(i));
+    for(let i=0; i<360; i+=1) {
+      let degreeUnitLen = (this.radius / 30);
+      const lineEndX = this.width/2 + this.radius * Math.cos(degToRad(i));
+      const lineEndY = this.height/2 - this.radius * Math.sin(degToRad(i));
 
       // Based on the midpoint formula, get a coordinate r/30 units away from
       // the end coordinate on the line between the centre and end coordinate
-      const lineStartX = lineEndX + (degreeUnitLen / this.radius) * (this.width/2 - lineEndX); // WTF???
+      if(i%5 == 0){
+        degreeUnitLen = (this.radius / 20);
+      }
+      if(i%10 == 0){
+        degreeUnitLen = (this.radius / 15);
+      }
+      const lineStartX = lineEndX + (degreeUnitLen / this.radius) * (this.width/2 - lineEndX);
       const lineStartY = lineEndY + (degreeUnitLen / this.radius) * (this.height/2 - lineEndY);
 
       this.ctx.beginPath();
@@ -265,29 +226,30 @@ export default class CanvasDrawer {
     // Write degree unit values
     this.ctx.font = "12.5px Consolas";
     this.ctx.fillStyle = black;
-    for(let i=0; i<360; i+=5) {
-      const posX = this.width/2 + (this.radius - degreeUnitLen) * Math.cos(this.degToRad(i));
-      const posY = this.height/2 - (this.radius - degreeUnitLen) * Math.sin(this.degToRad(i));
+    const degreeUnitValueLen = (this.radius / 15);
+    for(let i=0; i<360; i+=10) {
+      const posX = this.width/2 + (this.radius - degreeUnitValueLen) * Math.cos(degToRad(i));
+      const posY = this.height/2 - (this.radius - degreeUnitValueLen) * Math.sin(degToRad(i));
 
-      // if(this.isInRightQuadrants(this.degToRad(i))){
-      //   this.ctx.textAlign = "end";
-      // }
-      // if(this.isInLeftQuadrants(this.degToRad(i))){
-      //   this.ctx.textAlign = "start";
-      // }
-      // if(this.isInTopQuadrants(this.degToRad(i))){
-      //   this.ctx.textBaseline = "top";
-      // }
-      // if(this.isInBottomQuadrants(this.degToRad(i))){
-      //   this.ctx.textBaseline = "bottom";
-      // }
-      // this.ctx.textAlign = "middle";
-      // this.ctx.textBaseline = "centre";
-      //
-      // console.log(this.ctx.textAlign);
-      // console.log(this.ctx.textBaseline);
-      //
-      // this.ctx.fillText(i, posX, posY);
+      if(isInRightQuadrants(degToRad(i))){
+        this.ctx.textAlign = "end";
+      }
+      if(isInLeftQuadrants(degToRad(i))){
+        this.ctx.textAlign = "start";
+      }
+      if(isInTopQuadrants(degToRad(i))){
+        this.ctx.textBaseline = "top";
+      }
+      if(isInBottomQuadrants(degToRad(i))){
+        this.ctx.textBaseline = "bottom";
+      }
+      this.ctx.textAlign = "middle";
+      this.ctx.textBaseline = "centre";
+
+      console.log(this.ctx.textAlign);
+      console.log(this.ctx.textBaseline);
+
+      this.ctx.fillText(i, posX, posY);
     }
 
     // Write radian unit values
@@ -295,40 +257,54 @@ export default class CanvasDrawer {
     for(let i=0.0; i<(2*Math.PI); i+=0.1) {
       const posX = this.width/2 + (this.radius + radianUnitLen) * Math.cos(i);
       const posY = this.height/2 - (this.radius + radianUnitLen) * Math.sin(i);
-      if(this.isInRightQuadrants(i)){
+      if(isInRightQuadrants(i)){
         this.ctx.textAlign = "start";
       }
-      if(this.isInLeftQuadrants(i)){
+      if(isInLeftQuadrants(i)){
         this.ctx.textAlign = "end";
       }
-      if(this.isInTopQuadrants(i)){
+      if(isInTopQuadrants(i)){
         this.ctx.textBaseline = "bottom";
       }
-      if(this.isInBottomQuadrants(i)){
+      if(isInBottomQuadrants(i)){
         this.ctx.textBaseline = "top";
       }
       this.ctx.fillText(i.toFixed(1), posX, posY);
     }
 
-    // Write Pi
+    // Write Pi unit values
     this.ctx.fillStyle = grey;
     this.ctx.font = "20px Consolas";
     this.ctx.textAlign = "start";
     this.ctx.textBaseline = "middle";
-    this.ctx.fillText("0 & 2π", this.width/2 + this.radius + (radianUnitLen * 2), this.height/2);
+    this.ctx.fillText("0 & 2π", this.width/2 + this.radius + (radianUnitLen * 4), this.height/2);
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "bottom";
-    this.ctx.fillText("π/2", this.width/2, this.height/2 - this.radius - (radianUnitLen * 2));
+    this.ctx.fillText("π/2", this.width/2, this.height/2 - this.radius - (radianUnitLen * 4));
     this.ctx.textAlign = "end";
     this.ctx.textBaseline = "middle";
-    this.ctx.fillText("π", this.width/2 - this.radius - (radianUnitLen * 2), this.height/2);
+    this.ctx.fillText("π", this.width/2 - this.radius - (radianUnitLen * 4), this.height/2);
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "top";
-    this.ctx.fillText("3π/2", this.width/2, this.height/2 + this.radius + (radianUnitLen * 2));
+    this.ctx.fillText("3π/2", this.width/2, this.height/2 + this.radius + (radianUnitLen * 4));
+
+    // Draw axis lines
+    this.ctx.lineWidth = 1;
+    this.ctx.strokeStyle = black;
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(circleCentreX-this.radius, circleCentreY);
+    this.ctx.lineTo(circleCentreX+this.radius, circleCentreY);
+    this.ctx.stroke();
+
+    this.ctx.beginPath();
+    this.ctx.moveTo(circleCentreX, circleCentreY-this.radius);
+    this.ctx.lineTo(circleCentreX, circleCentreY+this.radius);
+    this.ctx.stroke();
 
     // Write quadtrants
     this.ctx.fillStyle = black;
-    this.ctx.font = "20px Consolas";
+    this.ctx.font = "17.5px Consolas";
     this.ctx.textAlign = "start";
     this.ctx.textBaseline = "bottom";
     this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import CanvasDrawer from "./CanvasDrawer.js"
+import CanvasDrawer from "./utils/CanvasDrawer.js"
 import "./Canvas.css";
 
 function Canvas() {
