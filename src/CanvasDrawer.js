@@ -1,5 +1,6 @@
 const white = "rgb(255, 255, 255)";
 const green = "rgb(35, 158, 45)";
+const black = "rgb(40, 44, 52)";
 
 export default class CanvasDrawer {
   constructor(ctx, width, height) {
@@ -56,12 +57,16 @@ export default class CanvasDrawer {
     const outputRadians = angle.toFixed(2);
 
     this.ctx.lineWidth = 2;
-    this.ctx.fillStyle = green;
+    this.ctx.strokeStyle = black;
 
     // Draw angle line
     this.ctx.beginPath();
     this.ctx.moveTo(this.width/2, this.height/2);
     this.ctx.lineTo(lineEndX, lineEndY);
+
+    this.ctx.stroke();
+
+    this.ctx.strokeStyle = green;
 
     // Draw sin line
     this.ctx.lineTo(lineEndX, this.height/2);
@@ -211,7 +216,7 @@ export default class CanvasDrawer {
 
     // Draw axis lines
     this.ctx.lineWidth = 1;
-    this.ctx.fillStyle = green;
+    this.ctx.strokeStyle = black;
 
     this.ctx.beginPath();
     this.ctx.moveTo(circleCentreX-this.radius, circleCentreY);
@@ -223,8 +228,24 @@ export default class CanvasDrawer {
     this.ctx.lineTo(circleCentreX, circleCentreY+this.radius);
     this.ctx.stroke();
 
-    // Draw quadtrants
-    this.ctx.fillStyle = green;
+    // Draw degree units
+    for (let i = 0; i < 360; i+=5) {
+      const lineEndX = this.width/2 + this.radius * Math.cos(this.degToRad(i));
+      const lineEndY = this.height/2 - this.radius * Math.sin(this.degToRad(i));
+
+      // Based on the midpoint formula, get a coordinate r/20 units away from
+      // the end coordinate on the line between the centre and end coordinate
+      const lineStartX = lineEndX + ((this.radius / 20) / this.radius) * (this.width/2 - lineEndX);
+      const lineStartY = lineEndY + ((this.radius / 20) / this.radius) * (this.height/2 - lineEndY);
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(lineStartX, lineStartY);
+      this.ctx.lineTo(lineEndX, lineEndY);
+      this.ctx.stroke();
+    }
+
+    // Write quadtrants
+    this.ctx.fillStyle = black;
     this.ctx.font = "20px Consolas";
     this.ctx.textAlign = "start";
     this.ctx.textBaseline = "bottom";
