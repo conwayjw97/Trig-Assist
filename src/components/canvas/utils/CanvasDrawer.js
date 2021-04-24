@@ -3,7 +3,7 @@ import Circle from "./Circle.js";
 import {
   degToRad,
   radToDeg
-} from "./angleCalc.js";
+} from "../../../utils/angleCalc.js";
 
 const white = "rgb(255, 255, 255)";
 const green = "rgb(36, 173, 48)";

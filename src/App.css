@@ -17,3 +17,23 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+input[type=text] {
+  height: 100%;
+  display: inline-block;
+  border: 0;
+  border-radius: 4px;
+  font: 20px Consolas;
+}
+
+input[type=text]:focus{
+    outline: none;
+}
+
+input[type=text].small-input {
+  width: 2em;
+}
+
+input[type=text].medium-input {
+  width: 4em;
+}

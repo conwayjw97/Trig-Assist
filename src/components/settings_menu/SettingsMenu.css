@@ -40,8 +40,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
 /* General sidebar styles */
 .bm-menu {
   background: rgb(161, 161, 161);
-  padding: 2.5em 1.5em 0;
-  font-size: 1.15em;
+  font: 20px Consolas;
+  padding: 1em 1em 0;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -51,8 +51,8 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: rgb(135, 135, 135);
-  padding: 0.8em;
+  color: rgb(40, 44, 52);
+  /* padding: 0.8em; */
 }
 
 /* Individual item */
