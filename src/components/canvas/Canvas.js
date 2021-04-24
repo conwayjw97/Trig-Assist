@@ -13,7 +13,7 @@ function Canvas(props) {
     const canvasDrawer = new CanvasDrawer(ctx, width, height);
     canvasDrawer.drawAngleLine(props.radianAngle);
     canvas.onmousemove = e => canvasDrawer.onMouseMove(e);
-  }, [props.radianAngle]);
+  }, [props.updateCount]);
 
   return (
     <canvas ref={canvasRef} width={width} height={height} className="canvas">

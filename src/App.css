@@ -37,3 +37,19 @@ input[type=text].small-input {
 input[type=text].medium-input {
   width: 4em;
 }
+
+button.wide-button {
+  transition-duration: 0.3s;
+  color: rgb(255, 255, 255);
+  background-color: rgb(40, 44, 52);
+  font: 20px Consolas;
+  border: 0;
+  border-radius: 4px;
+  margin: 0 1em;
+  width: 85%;
+  height: 2em;
+}
+
+button.wide-button:hover {
+  background-color: rgb(36, 173, 48);
+}

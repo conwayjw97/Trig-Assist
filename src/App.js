@@ -11,6 +11,7 @@ import {
 function App() {
   const [degreeAngle, setDegreeAngle] = useState(0);
   const [radianAngle, setRadianAngle] = useState(0);
+  const [updateCount, setUpdateCount] = useState(0);
 
   const handleDegreeAngleChange = (event) => {
     const input = event.target.value;
@@ -29,10 +30,14 @@ function App() {
     setDegreeAngle(radToDeg(input).toFixed(0));
   }
 
+  const handleUpdateClicked = (event) => {
+    setUpdateCount(updateCount + 1);
+  }
+
   return (
     <div className="App">
-      <SettingsMenu degreeAngle={degreeAngle} radianAngle={radianAngle} handleDegreeAngleChange={handleDegreeAngleChange} handleRadianAngleChange={handleRadianAngleChange}/>
-      <Canvas radianAngle={radianAngle} />
+      <SettingsMenu degreeAngle={degreeAngle} radianAngle={radianAngle} handleDegreeAngleChange={handleDegreeAngleChange} handleRadianAngleChange={handleRadianAngleChange} handleUpdateClicked={handleUpdateClicked}/>
+      <Canvas radianAngle={radianAngle} updateCount={updateCount} />
     </div>
   );
 }
