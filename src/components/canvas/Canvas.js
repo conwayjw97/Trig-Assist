@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import CanvasDrawer from "./utils/CanvasDrawer.js"
 import "./Canvas.css";
 

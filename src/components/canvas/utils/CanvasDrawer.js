@@ -75,7 +75,6 @@ export default class CanvasDrawer {
     const circleCentreX = this.circle.centreX;
     const circleCentreY = this.circle.centreY;
     const radius = this.circle.radius;
-    const outputRadians = angle.toFixed(2);
 
     this.ctx.lineWidth = 2;
 
@@ -146,12 +145,7 @@ export default class CanvasDrawer {
     this.textAlignOutwards(angle);
     const lineEndXToSecLineEndX = secLineEndX-lineEndX;
     const lineEndYToSecLineEndY = circleCentreY-lineEndY;
-    if(Math.cos(angle) == 0.0){
-      this.ctx.fillText("∞", lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
-    }
-    else{
-      this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
-    }
+    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
 
     // Write cotan values
     this.textAlignOutwards(angle);
@@ -179,10 +173,10 @@ export default class CanvasDrawer {
     this.ctx.strokeStyle = black;
     for(let i=0; i<360; i+=1) {
       let degreeUnitLen = (radius / 30);
-      if(i%5 == 0){
+      if(i%5 === 0){
         degreeUnitLen = (radius / 20);
       }
-      if(i%10 == 0){
+      if(i%10 === 0){
         degreeUnitLen = (radius / 15);
       }
 
@@ -313,7 +307,7 @@ export default class CanvasDrawer {
     const circleCentreY = this.circle.centreY;
     const radius = this.circle.radius;
 
-    // If the distance of this point is less than the distance of the radius to the circle"s centre
+    // If the distance of this point is less than the distance of the radius to the circle's centre
     if(Math.sqrt((mouseX-circleCentreX)*(mouseX-circleCentreX) + (mouseY-circleCentreY)*(mouseY-circleCentreY)) < radius){
       this.resetCanvas();
 

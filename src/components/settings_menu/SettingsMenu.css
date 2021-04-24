@@ -1,5 +1,5 @@
 /* Position and sizing of burger button */
-.settings-menu .bm-burger-button {
+.bm-burger-button {
   position: fixed;
   width: 36px;
   height: 30px;
@@ -9,7 +9,7 @@
 
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
-  background: rgb(135, 135, 135);
+  background: rgb(161, 161, 161);
 }
 
 /* Color/shape of burger icon bars on hover*/
@@ -39,34 +39,23 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* General sidebar styles */
 .bm-menu {
-  background: rgb(105, 105, 105);
-  font-size: 20px;
+  background: rgb(161, 161, 161);
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
 }
 
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {
-  fill: rgb(105, 105, 105);
+  fill: rgb(161, 161, 161);
 }
 
 /* Wrapper for item list */
 .bm-item-list {
-  color: rgb(255, 255, 255);
+  color: rgb(135, 135, 135);
+  padding: 0.8em;
 }
 
 /* Individual item */
 .bm-item {
   display: inline-block;
-  color: rgb(255, 255, 255);
-  margin: 10px;
-  text-align: left;
-  transition: color 0.2s;
-}
-
-.bm-item:hover {
-  color: rgb(0, 0, 0);
-}
-
-/* Styling of overlay */
-.bm-overlay {
-  background: rgba(0, 0, 0, 0);
 }
