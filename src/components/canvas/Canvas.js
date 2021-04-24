@@ -11,7 +11,9 @@ function Canvas(props) {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const canvasDrawer = new CanvasDrawer(ctx, width, height);
-    canvasDrawer.drawAngleLine(props.radianAngle);
+    if(props.radianAngle != null){
+      canvasDrawer.drawAngleLine(props.radianAngle);
+    }
     canvas.onmousemove = e => canvasDrawer.onMouseMove(e);
   }, [props.updateCount]);
 

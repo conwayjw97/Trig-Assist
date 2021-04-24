@@ -9,8 +9,8 @@ import {
 } from "./utils/angleCalc.js";
 
 function App() {
-  const [degreeAngle, setDegreeAngle] = useState(0);
-  const [radianAngle, setRadianAngle] = useState(0);
+  const [degreeAngle, setDegreeAngle] = useState(null);
+  const [radianAngle, setRadianAngle] = useState(null);
   const [updateCount, setUpdateCount] = useState(0);
 
   const handleDegreeAngleChange = (event) => {
