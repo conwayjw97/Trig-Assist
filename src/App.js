@@ -32,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <SettingsMenu degreeAngle={degreeAngle} radianAngle={radianAngle} handleDegreeAngleChange={handleDegreeAngleChange} handleRadianAngleChange={handleRadianAngleChange}/>
-      <Canvas />
+      <Canvas radianAngle={radianAngle} />
     </div>
   );
 }
