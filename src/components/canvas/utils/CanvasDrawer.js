@@ -11,10 +11,11 @@ const black = "rgb(40, 44, 52)";
 const grey = "rgb(135, 135, 135)";
 
 export default class CanvasDrawer {
-  constructor(ctx, width, height) {
+  constructor(ctx, width, height, trigVisible) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
+    this.trigVisible = trigVisible;
     this.radius = Math.floor(height/3);
     this.circle = new Circle(this.width/2, this.height/2, this.width, this.height, this.radius);
     this.resetCanvas();
@@ -89,31 +90,43 @@ export default class CanvasDrawer {
     this.ctx.strokeStyle = green;
 
     // Draw sin line
-    this.ctx.lineTo(lineEndX, circleCentreY);
+    if(this.trigVisible.sin){
+      this.ctx.lineTo(lineEndX, circleCentreY);
+    }
 
     // Draw cos line
-    this.ctx.moveTo(lineEndX, lineEndY);
-    this.ctx.lineTo(circleCentreX, lineEndY);
+    if(this.trigVisible.cos){
+      this.ctx.moveTo(lineEndX, lineEndY);
+      this.ctx.lineTo(circleCentreX, lineEndY);
+    }
 
     // Draw sec line
     const secLineLen = (1/Math.cos(angle)) * radius;
     const secLineEndX = circleCentreX + secLineLen;
-    this.ctx.moveTo(circleCentreX, circleCentreY);
-    this.ctx.lineTo(secLineEndX, circleCentreY);
+    if(this.trigVisible.sec){
+      this.ctx.moveTo(circleCentreX, circleCentreY);
+      this.ctx.lineTo(secLineEndX, circleCentreY);
+    }
 
     // Draw cosec line
     const cosecLineLen = (1/Math.sin(angle)) * radius;
     const cosecLineEndY = circleCentreY - cosecLineLen;
-    this.ctx.moveTo(circleCentreX, circleCentreY);
-    this.ctx.lineTo(circleCentreX, cosecLineEndY);
+    if(this.trigVisible.csc){
+      this.ctx.moveTo(circleCentreX, circleCentreY);
+      this.ctx.lineTo(circleCentreX, cosecLineEndY);
+    }
 
     // Draw tan line
-    this.ctx.moveTo(lineEndX, lineEndY);
-    this.ctx.lineTo(secLineEndX, circleCentreY);
+    if(this.trigVisible.tan){
+      this.ctx.moveTo(lineEndX, lineEndY);
+      this.ctx.lineTo(secLineEndX, circleCentreY);
+    }
 
     // Draw cotan line
-    this.ctx.moveTo(lineEndX, lineEndY);
-    this.ctx.lineTo(circleCentreX, cosecLineEndY);
+    if(this.trigVisible.cot){
+      this.ctx.moveTo(lineEndX, lineEndY);
+      this.ctx.lineTo(circleCentreX, cosecLineEndY);
+    }
 
     this.ctx.stroke();
 
@@ -126,32 +139,44 @@ export default class CanvasDrawer {
     this.ctx.font = "20px Consolas";
 
     // Write cos values
-    this.textAlignTopBottomInwards(angle);
-    this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
+    if(this.trigVisible.cos){
+      this.textAlignTopBottomInwards(angle);
+      this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
+    }
 
     // Write sin values
-    this.textAlignRightLeftInwards(angle);
-    this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
+    if(this.trigVisible.sin){
+      this.textAlignRightLeftInwards(angle);
+      this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
+    }
 
     // Write sec values
-    this.textAlignTopBottomInwards(angle);
-    this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
+    if(this.trigVisible.sec){
+      this.textAlignTopBottomInwards(angle);
+      this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
+    }
 
     // Write cosec values
-    this.textAlignRightLeftInwards(angle);
-    this.ctx.fillText((1/Math.sin(angle)).toFixed(2), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
+    if(this.trigVisible.csc){
+      this.textAlignRightLeftInwards(angle);
+      this.ctx.fillText((1/Math.sin(angle)).toFixed(2), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
+    }
 
     // Write tan values
-    this.textAlignOutwards(angle);
-    const lineEndXToSecLineEndX = secLineEndX-lineEndX;
-    const lineEndYToSecLineEndY = circleCentreY-lineEndY;
-    this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
+    if(this.trigVisible.tan){
+      this.textAlignOutwards(angle);
+      const lineEndXToSecLineEndX = secLineEndX-lineEndX;
+      const lineEndYToSecLineEndY = circleCentreY-lineEndY;
+      this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
+    }
 
     // Write cotan values
-    this.textAlignOutwards(angle);
-    const lineEndXToCosecLineEndX = lineEndX-circleCentreX;
-    const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
-    this.ctx.fillText(Math.atan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+    if(this.trigVisible.cot){
+      this.textAlignOutwards(angle);
+      const lineEndXToCosecLineEndX = lineEndX-circleCentreX;
+      const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
+      this.ctx.fillText(Math.atan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+    }
   }
 
   resetCanvas() {

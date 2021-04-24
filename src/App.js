@@ -12,6 +12,14 @@ function App() {
   const [degreeAngle, setDegreeAngle] = useState(null);
   const [radianAngle, setRadianAngle] = useState(null);
   const [trigValues, setTrigValues] = useState({});
+  const [trigVisible, setTrigVisible] = useState({
+    "cos": true,
+    "sin": true,
+    "tan": true,
+    "cot": true,
+    "sec": true,
+    "csc": true,
+  });
   const [updateCount, setUpdateCount] = useState(0);
 
   const handleDegreeAngleChange = (event) => {
@@ -51,6 +59,31 @@ function App() {
     setUpdateCount(updateCount + 1);
   }
 
+  const handleTrigSelectionChange = (event) => {
+    const newTrigVisible = trigVisible;
+    switch(event.target.id){
+      case "cos-checkbox":
+        newTrigVisible.cos = !trigVisible.cos;
+        break;
+      case "sin-checkbox":
+        newTrigVisible.sin = !trigVisible.sin;
+        break;
+      case "tan-checkbox":
+        newTrigVisible.tan = !trigVisible.tan;
+        break;
+      case "cot-checkbox":
+        newTrigVisible.cot = !trigVisible.cot;
+        break;
+      case "sec-checkbox":
+        newTrigVisible.sec = !trigVisible.sec;
+        break;
+      case "csc-checkbox":
+        newTrigVisible.csc = !trigVisible.csc;
+        break;
+    }
+    setTrigVisible(newTrigVisible);
+  }
+
   return (
     <div className="App">
       <SettingsMenu
@@ -59,9 +92,14 @@ function App() {
         handleDegreeAngleChange={handleDegreeAngleChange}
         handleRadianAngleChange={handleRadianAngleChange}
         handleUpdateClicked={handleUpdateClicked}
+        handleTrigSelectionChange={handleTrigSelectionChange}
         trigValues={trigValues}
         />
-      <Canvas radianAngle={radianAngle} updateCount={updateCount} />
+      <Canvas
+        radianAngle={radianAngle}
+        trigVisible={trigVisible}
+        updateCount={updateCount}
+        />
     </div>
   );
 }
