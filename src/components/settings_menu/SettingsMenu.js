@@ -14,8 +14,8 @@ function SettingsMenu(props) {
           rad
       </label>
       <label className="centered underlined" style={{padding: "1em 0"}}>
-          Click and Hold Angle Selection:
-          <input id="hold-click-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
+          Click & Hold Angle Select:
+          <input id="hold-click-checkbox" type="checkbox" defaultChecked onChange={props.handleAngleSelectionChange} />
       </label>
       <label className="centered">
           Trigonometric Functions

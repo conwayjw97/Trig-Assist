@@ -12,6 +12,7 @@ function App() {
   const [degreeAngle, setDegreeAngle] = useState(null);
   const [radianAngle, setRadianAngle] = useState(null);
   const [trigValues, setTrigValues] = useState({});
+  const [angleSelect, setAngleSelect] = useState(true);
   const [trigVisible, setTrigVisible] = useState({
     "cos": true,
     "sin": true,
@@ -66,49 +67,52 @@ function App() {
     setUpdateCount(updateCount + 1);
   }
 
+  const handleAngleSelectionChange = (event) => {
+    setAngleSelect(event.target.checked);
+  }
+
   const handleTrigSelectionChange = (event) => {
     const newTrigVisible = trigVisible;
     switch(event.target.id){
       case "cos-checkbox":
-        newTrigVisible.cos = !trigVisible.cos;
+        newTrigVisible.cos = event.target.checked;
         break;
       case "sin-checkbox":
-        newTrigVisible.sin = !trigVisible.sin;
+        newTrigVisible.sin = event.target.checked;
         break;
       case "tan-checkbox":
-        newTrigVisible.tan = !trigVisible.tan;
+        newTrigVisible.tan = event.target.checked;
         break;
       case "cot-checkbox":
-        newTrigVisible.cot = !trigVisible.cot;
+        newTrigVisible.cot = event.target.checked;
         break;
       case "sec-checkbox":
-        newTrigVisible.sec = !trigVisible.sec;
+        newTrigVisible.sec = event.target.checked;
         break;
       case "csc-checkbox":
-        newTrigVisible.csc = !trigVisible.csc;
+        newTrigVisible.csc = event.target.checked;
         break;
     }
     setTrigVisible(newTrigVisible);
   }
 
   const handleCircleDetailChange = (event) => {
-    console.log("AAAAAAA");
     const newCircleDetails = circleDetails;
     switch(event.target.id){
       case "axis-checkbox":
-        newCircleDetails.axes = !circleDetails.axes;
+        newCircleDetails.axes = event.target.checked;
         break;
       case "degree-checkbox":
-        newCircleDetails.degrees = !circleDetails.degrees;
+        newCircleDetails.degrees = event.target.checked;
         break;
       case "radian-checkbox":
-        newCircleDetails.radians = !circleDetails.radians;
+        newCircleDetails.radians = event.target.checked;
         break;
       case "pi-checkbox":
-        newCircleDetails.pi = !circleDetails.pi;
+        newCircleDetails.pi = event.target.checked;
         break;
       case "quadrant-checkbox":
-        newCircleDetails.quadrants = !circleDetails.quadrants;
+        newCircleDetails.quadrants = event.target.checked;
         break;
     }
     setCircleDetails(newCircleDetails);
@@ -122,12 +126,14 @@ function App() {
         handleDegreeAngleChange={handleDegreeAngleChange}
         handleRadianAngleChange={handleRadianAngleChange}
         handleUpdateClicked={handleUpdateClicked}
+        handleAngleSelectionChange={handleAngleSelectionChange}
         handleTrigSelectionChange={handleTrigSelectionChange}
         handleCircleDetailChange={handleCircleDetailChange}
         trigValues={trigValues}
         />
       <Canvas
         radianAngle={radianAngle}
+        angleSelect={angleSelect}
         trigVisible={trigVisible}
         circleDetails={circleDetails}
         updateCount={updateCount}

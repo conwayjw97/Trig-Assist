@@ -14,7 +14,26 @@ function Canvas(props) {
     if(props.radianAngle != null){
       canvasDrawer.drawAngleLine(props.radianAngle);
     }
-    canvas.onmousemove = e => canvasDrawer.onMouseMove(e);
+    if(props.angleSelect){
+      let mouseDown = false;
+      canvas.onmousedown = (e) => {
+        canvasDrawer.onMouseMove(e);
+        mouseDown = true;
+      }
+      canvas.onmousemove = (e) => {
+        if(mouseDown){
+          canvasDrawer.onMouseMove(e);
+        }
+      }
+      canvas.onmouseup = (e) => {
+        mouseDown = false;
+      }
+    }
+    else{
+      canvas.onmousedown = null;
+      canvas.onmousemove = null;
+      canvas.onmouseup = null;
+    }
   }, [props.updateCount]);
 
   return (

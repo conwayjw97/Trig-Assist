@@ -181,7 +181,6 @@ export default class CanvasDrawer {
   }
 
   resetCanvas() {
-    console.log(this.circleDetails);
     const circleCentreX = this.circle.centreX;
     const circleCentreY = this.circle.centreY;
     const radius = this.circle.radius;
