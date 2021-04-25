@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/Trig-Assist/static/css/main.3bb854eb.chunk.css",
-    "main.js": "/Trig-Assist/static/js/main.2364a1f6.chunk.js",
-    "main.js.map": "/Trig-Assist/static/js/main.2364a1f6.chunk.js.map",
+    "main.css": "/Trig-Assist/static/css/main.57495638.chunk.css",
+    "main.js": "/Trig-Assist/static/js/main.76c5c35a.chunk.js",
+    "main.js.map": "/Trig-Assist/static/js/main.76c5c35a.chunk.js.map",
     "runtime-main.js": "/Trig-Assist/static/js/runtime-main.8eec4ba3.js",
     "runtime-main.js.map": "/Trig-Assist/static/js/runtime-main.8eec4ba3.js.map",
     "static/js/2.b991ae18.chunk.js": "/Trig-Assist/static/js/2.b991ae18.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.86b082a0.chunk.js": "/Trig-Assist/static/js/3.86b082a0.chunk.js",
     "static/js/3.86b082a0.chunk.js.map": "/Trig-Assist/static/js/3.86b082a0.chunk.js.map",
     "index.html": "/Trig-Assist/index.html",
-    "static/css/main.3bb854eb.chunk.css.map": "/Trig-Assist/static/css/main.3bb854eb.chunk.css.map",
+    "static/css/main.57495638.chunk.css.map": "/Trig-Assist/static/css/main.57495638.chunk.css.map",
     "static/js/2.b991ae18.chunk.js.LICENSE.txt": "/Trig-Assist/static/js/2.b991ae18.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8eec4ba3.js",
     "static/js/2.b991ae18.chunk.js",
-    "static/css/main.3bb854eb.chunk.css",
-    "static/js/main.2364a1f6.chunk.js"
+    "static/css/main.57495638.chunk.css",
+    "static/js/main.76c5c35a.chunk.js"
   ]
 }
