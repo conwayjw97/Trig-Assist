@@ -10,7 +10,7 @@ function Canvas(props) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const canvasDrawer = new CanvasDrawer(ctx, width, height, props.trigVisible);
+    const canvasDrawer = new CanvasDrawer(ctx, width, height, props.trigVisible, props.circleDetails);
     if(props.radianAngle != null){
       canvasDrawer.drawAngleLine(props.radianAngle);
     }

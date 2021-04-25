@@ -11,11 +11,12 @@ const black = "rgb(40, 44, 52)";
 const grey = "rgb(135, 135, 135)";
 
 export default class CanvasDrawer {
-  constructor(ctx, width, height, trigVisible) {
+  constructor(ctx, width, height, trigVisible, circleDetails) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
     this.trigVisible = trigVisible;
+    this.circleDetails = circleDetails;
     this.radius = Math.floor(height/3);
     this.circle = new Circle(this.width/2, this.height/2, this.width, this.height, this.radius);
     this.resetCanvas();
@@ -131,12 +132,12 @@ export default class CanvasDrawer {
     this.ctx.stroke();
 
     // Write angle value
+    this.ctx.font = "20px Consolas";
     this.ctx.fillStyle = white;
     this.textAlignOutwards(angle);
     this.ctx.fillText(radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
 
     this.ctx.fillStyle = green;
-    this.ctx.font = "20px Consolas";
 
     // Write cos values
     if(this.trigVisible.cos){
@@ -180,6 +181,7 @@ export default class CanvasDrawer {
   }
 
   resetCanvas() {
+    console.log(this.circleDetails);
     const circleCentreX = this.circle.centreX;
     const circleCentreY = this.circle.centreY;
     const radius = this.circle.radius;
@@ -193,136 +195,152 @@ export default class CanvasDrawer {
     this.ctx.arc(circleCentreX, circleCentreY, radius, degToRad(0), degToRad(360), false);
     this.ctx.fill();
 
-    // Draw degree unit lines
     this.ctx.lineWidth = 1;
-    this.ctx.strokeStyle = black;
-    for(let i=0; i<360; i+=1) {
-      let degreeUnitLen = (radius / 30);
-      if(i%5 === 0){
-        degreeUnitLen = (radius / 20);
-      }
-      if(i%10 === 0){
-        degreeUnitLen = (radius / 15);
-      }
 
-      const radiants = degToRad(i);
-      const [lineEndX, lineEndY] = this.circle.circleEndCoords(radiants);
-      const [lineStartX, lineStartY] = this.circle.circleEndOffsetCoords(radiants, -degreeUnitLen);
+    // Draw degree unit lines
+    if(this.circleDetails.degrees){
+      this.ctx.strokeStyle = black;
+      for(let i=0; i<360; i+=1) {
+        let degreeUnitLen = (radius / 30);
+        if(i%5 === 0){
+          degreeUnitLen = (radius / 20);
+        }
+        if(i%10 === 0){
+          degreeUnitLen = (radius / 15);
+        }
 
-      this.ctx.beginPath();
-      this.ctx.moveTo(lineStartX, lineStartY);
-      this.ctx.lineTo(lineEndX, lineEndY);
-      this.ctx.stroke();
+        const radiants = degToRad(i);
+        const [lineEndX, lineEndY] = this.circle.circleEndCoords(radiants);
+        const [lineStartX, lineStartY] = this.circle.circleEndOffsetCoords(radiants, -degreeUnitLen);
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(lineStartX, lineStartY);
+        this.ctx.lineTo(lineEndX, lineEndY);
+        this.ctx.stroke();
+      }
     }
 
     // Draw radian unit lines
-    this.ctx.strokeStyle = white;
     const radianUnitLen = (radius / 30);
-    for(let i=0.0; i<(2*Math.PI); i+=0.1) {
-      const [lineStartX, lineStartY] = this.circle.circleEndCoords(i);
-      const [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
+    if(this.circleDetails.radians){
+      this.ctx.strokeStyle = white;
+      for(let i=0.0; i<(2*Math.PI); i+=0.1) {
+        const [lineStartX, lineStartY] = this.circle.circleEndCoords(i);
+        const [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
 
-      this.ctx.beginPath();
-      this.ctx.moveTo(lineStartX, lineStartY);
-      this.ctx.lineTo(lineEndX, lineEndY);
-      this.ctx.stroke();
+        this.ctx.beginPath();
+        this.ctx.moveTo(lineStartX, lineStartY);
+        this.ctx.lineTo(lineEndX, lineEndY);
+        this.ctx.stroke();
+      }
     }
+
+    this.ctx.font = "12.5px Consolas";
 
     // Write degree unit values
-    this.ctx.font = "12.5px Consolas";
-    this.ctx.fillStyle = black;
-    const degreeUnitValueLen = (radius / 15);
-    for(let i=0; i<360; i+=10) {
-      const radians = degToRad(i);
-      const [posX, posY] = this.circle.circleEndOffsetCoords(radians, -degreeUnitValueLen);
+    if(this.circleDetails.degrees){
+      this.ctx.fillStyle = black;
+      const degreeUnitValueLen = (radius / 15);
+      for(let i=0; i<360; i+=10) {
+        const radians = degToRad(i);
+        const [posX, posY] = this.circle.circleEndOffsetCoords(radians, -degreeUnitValueLen);
 
-      this.textAlignInwards(radians);
-      this.ctx.fillText(i, posX, posY);
+        this.textAlignInwards(radians);
+        this.ctx.fillText(i, posX, posY);
+      }
     }
 
-    // Write radian unit values
     this.ctx.fillStyle = grey;
-    for(let i=0.0; i<(2*Math.PI); i+=0.1) {
-      const [posX, posY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
 
-      this.textAlignOutwards(i);
-      this.ctx.fillText(i.toFixed(1), posX, posY);
+    // Write radian unit values
+    if(this.circleDetails.radians){
+      for(let i=0.0; i<(2*Math.PI); i+=0.1) {
+        const [posX, posY] = this.circle.circleEndOffsetCoords(i, radianUnitLen);
+
+        this.textAlignOutwards(i);
+        this.ctx.fillText(i.toFixed(1), posX, posY);
+      }
     }
 
     // Write Pi unit values
-    this.ctx.fillStyle = grey;
-    this.ctx.font = "20px Consolas";
-    this.ctx.textAlign = "start";
-    this.ctx.textBaseline = "middle";
-    this.ctx.fillText("0 & 2π", circleCentreX + radius + (radianUnitLen * 4), circleCentreY);
+    if(this.circleDetails.pi){
+      this.ctx.font = "20px Consolas";
+      this.ctx.textAlign = "start";
+      this.ctx.textBaseline = "middle";
+      this.ctx.fillText("0 & 2π", circleCentreX + radius + (radianUnitLen * 4), circleCentreY);
 
-    this.ctx.textBaseline = "bottom";
-    let [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(30), (radianUnitLen * 4));
-    this.ctx.fillText("π/6", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(45), (radianUnitLen * 4));
-    this.ctx.fillText("π/4", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(60), (radianUnitLen * 4));
-    this.ctx.fillText("π/3", lineEndX, lineEndY);
+      this.ctx.textBaseline = "bottom";
+      let [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(30), (radianUnitLen * 4));
+      this.ctx.fillText("π/6", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(45), (radianUnitLen * 4));
+      this.ctx.fillText("π/4", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(60), (radianUnitLen * 4));
+      this.ctx.fillText("π/3", lineEndX, lineEndY);
 
-    this.ctx.textAlign = "center";
-    this.ctx.fillText("π/2", circleCentreX, circleCentreY - radius - (radianUnitLen * 4));
+      this.ctx.textAlign = "center";
+      this.ctx.fillText("π/2", circleCentreX, circleCentreY - radius - (radianUnitLen * 4));
 
-    this.ctx.textAlign = "end";
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(120), (radianUnitLen * 4));
-    this.ctx.fillText("2π/3", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(135), (radianUnitLen * 4));
-    this.ctx.fillText("3π/4", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(150), (radianUnitLen * 4));
-    this.ctx.fillText("5π/6", lineEndX, lineEndY);
+      this.ctx.textAlign = "end";
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(120), (radianUnitLen * 4));
+      this.ctx.fillText("2π/3", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(135), (radianUnitLen * 4));
+      this.ctx.fillText("3π/4", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(150), (radianUnitLen * 4));
+      this.ctx.fillText("5π/6", lineEndX, lineEndY);
 
-    this.ctx.textBaseline = "middle";
-    this.ctx.fillText("π", circleCentreX - radius - (radianUnitLen * 4), circleCentreY);
+      this.ctx.textBaseline = "middle";
+      this.ctx.fillText("π", circleCentreX - radius - (radianUnitLen * 4), circleCentreY);
 
-    this.ctx.textBaseline = "top";
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(210), (radianUnitLen * 4));
-    this.ctx.fillText("7π/6", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(225), (radianUnitLen * 4));
-    this.ctx.fillText("5π/4", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(240), (radianUnitLen * 4));
-    this.ctx.fillText("4π/3", lineEndX, lineEndY);
+      this.ctx.textBaseline = "top";
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(210), (radianUnitLen * 4));
+      this.ctx.fillText("7π/6", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(225), (radianUnitLen * 4));
+      this.ctx.fillText("5π/4", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(240), (radianUnitLen * 4));
+      this.ctx.fillText("4π/3", lineEndX, lineEndY);
 
-    this.ctx.textAlign = "center";
-    this.ctx.fillText("3π/2", circleCentreX, circleCentreY + radius + (radianUnitLen * 4));
+      this.ctx.textAlign = "center";
+      this.ctx.fillText("3π/2", circleCentreX, circleCentreY + radius + (radianUnitLen * 4));
 
-    this.ctx.textAlign = "start";
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(300), (radianUnitLen * 4));
-    this.ctx.fillText("5π/3", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(315), (radianUnitLen * 4));
-    this.ctx.fillText("7π/4", lineEndX, lineEndY);
-    [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(330), (radianUnitLen * 4));
-    this.ctx.fillText("11π/6", lineEndX, lineEndY);
+      this.ctx.textAlign = "start";
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(300), (radianUnitLen * 4));
+      this.ctx.fillText("5π/3", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(315), (radianUnitLen * 4));
+      this.ctx.fillText("7π/4", lineEndX, lineEndY);
+      [lineEndX, lineEndY] = this.circle.circleEndOffsetCoords(degToRad(330), (radianUnitLen * 4));
+      this.ctx.fillText("11π/6", lineEndX, lineEndY);
+    }
 
     // Draw axis lines
-    this.ctx.strokeStyle = black;
+    if(this.circleDetails.axes){
+      this.ctx.strokeStyle = black;
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(circleCentreX-radius, circleCentreY);
-    this.ctx.lineTo(circleCentreX+radius, circleCentreY);
-    this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(circleCentreX-radius, circleCentreY);
+      this.ctx.lineTo(circleCentreX+radius, circleCentreY);
+      this.ctx.stroke();
 
-    this.ctx.beginPath();
-    this.ctx.moveTo(circleCentreX, circleCentreY-radius);
-    this.ctx.lineTo(circleCentreX, circleCentreY+radius);
-    this.ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo(circleCentreX, circleCentreY-radius);
+      this.ctx.lineTo(circleCentreX, circleCentreY+radius);
+      this.ctx.stroke();
+    }
 
     // Write quadtrants
-    this.ctx.fillStyle = black;
-    this.ctx.font = "17.5px Consolas";
-    this.ctx.textAlign = "start";
-    this.ctx.textBaseline = "bottom";
-    this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
-    this.ctx.textAlign = "end";
-    this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
-    this.ctx.textAlign = "end";
-    this.ctx.textBaseline = "top";
-    this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
-    this.ctx.textAlign = "start";
-    this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
+    if(this.circleDetails.qudarants){
+      this.ctx.fillStyle = black;
+      this.ctx.font = "17.5px Consolas";
+      this.ctx.textAlign = "start";
+      this.ctx.textBaseline = "bottom";
+      this.ctx.fillText("I", circleCentreX+5, circleCentreY-5);
+      this.ctx.textAlign = "end";
+      this.ctx.fillText("II", circleCentreX-5, circleCentreY-5);
+      this.ctx.textAlign = "end";
+      this.ctx.textBaseline = "top";
+      this.ctx.fillText("III", circleCentreX-5, circleCentreY+5);
+      this.ctx.textAlign = "start";
+      this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
+    }
   }
 
   onMouseMove(e){

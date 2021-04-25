@@ -20,6 +20,13 @@ function App() {
     "sec": true,
     "csc": true,
   });
+  const [circleDetails, setCircleDetails] = useState({
+    "axes": true,
+    "degrees": true,
+    "radians": true,
+    "pi": true,
+    "quadrants": true,
+  });
   const [updateCount, setUpdateCount] = useState(0);
 
   const handleDegreeAngleChange = (event) => {
@@ -84,6 +91,29 @@ function App() {
     setTrigVisible(newTrigVisible);
   }
 
+  const handleCircleDetailChange = (event) => {
+    console.log("AAAAAAA");
+    const newCircleDetails = circleDetails;
+    switch(event.target.id){
+      case "axis-checkbox":
+        newCircleDetails.axes = !circleDetails.axes;
+        break;
+      case "degree-checkbox":
+        newCircleDetails.degrees = !circleDetails.degrees;
+        break;
+      case "radian-checkbox":
+        newCircleDetails.radians = !circleDetails.radians;
+        break;
+      case "pi-checkbox":
+        newCircleDetails.pi = !circleDetails.pi;
+        break;
+      case "quadrant-checkbox":
+        newCircleDetails.quadrants = !circleDetails.quadrants;
+        break;
+    }
+    setCircleDetails(newCircleDetails);
+  }
+
   return (
     <div className="App">
       <SettingsMenu
@@ -93,11 +123,13 @@ function App() {
         handleRadianAngleChange={handleRadianAngleChange}
         handleUpdateClicked={handleUpdateClicked}
         handleTrigSelectionChange={handleTrigSelectionChange}
+        handleCircleDetailChange={handleCircleDetailChange}
         trigValues={trigValues}
         />
       <Canvas
         radianAngle={radianAngle}
         trigVisible={trigVisible}
+        circleDetails={circleDetails}
         updateCount={updateCount}
         />
     </div>
