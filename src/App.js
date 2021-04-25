@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Canvas from './components/canvas/Canvas.js';
 import SettingsMenu from './components/settings_menu/SettingsMenu.js';
 import ValuesMenu from './components/values_menu/ValuesMenu.js';
@@ -30,6 +30,10 @@ function App() {
     "quadrants": true,
   });
   const [updateCount, setUpdateCount] = useState(0);
+
+  useEffect(() => {
+    document.title = "Trig Assist"
+  }, []);
 
   const updateTrigValues = (radians) => {
     setTrigValues({
