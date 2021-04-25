@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Trig-Assist/static/css/main.57495638.chunk.css",
-    "main.js": "/Trig-Assist/static/js/main.76c5c35a.chunk.js",
-    "main.js.map": "/Trig-Assist/static/js/main.76c5c35a.chunk.js.map",
+    "main.js": "/Trig-Assist/static/js/main.86fa8162.chunk.js",
+    "main.js.map": "/Trig-Assist/static/js/main.86fa8162.chunk.js.map",
     "runtime-main.js": "/Trig-Assist/static/js/runtime-main.8eec4ba3.js",
     "runtime-main.js.map": "/Trig-Assist/static/js/runtime-main.8eec4ba3.js.map",
     "static/js/2.b991ae18.chunk.js": "/Trig-Assist/static/js/2.b991ae18.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.8eec4ba3.js",
     "static/js/2.b991ae18.chunk.js",
     "static/css/main.57495638.chunk.css",
-    "static/js/main.76c5c35a.chunk.js"
+    "static/js/main.86fa8162.chunk.js"
   ]
 }
