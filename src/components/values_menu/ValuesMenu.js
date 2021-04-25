@@ -5,7 +5,7 @@ import "../Menu.css";
 function ValuesMenu(props) {
   return (
     <Menu right noOverlay disableAutoFocus isOpen width={375}>
-      <label className="centered">
+      <label className="centered large-print">
           Trigonometric Function Values
       </label>
       <label className="centered">

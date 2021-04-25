@@ -6,18 +6,18 @@ function SettingsMenu(props) {
   return (
     <Menu noOverlay disableAutoFocus isOpen width={375}>
       <button onClick={props.handleUpdateClicked} className="wide-button">Update</button>
-      <label className="centered underlined" style={{padding: "1em 0"}}>
+      <label className="centered large-print underlined" style={{padding: "1em 0"}}>
           θ:
           <input type="text" style={{marginLeft: "0.25em"}} value={props.degreeAngle} onChange={props.handleDegreeAngleChange} className="small-input" />
           ° ≈
           <input type="text" style={{marginLeft: "0.8em", marginRight: "0.25em"}} value={props.radianAngle} onChange={props.handleRadianAngleChange} className="medium-input" />
           rad
       </label>
-      <label className="centered underlined" style={{padding: "1em 0"}}>
+      <label className="centered large-print underlined" style={{padding: "1em 0"}}>
           Click & Hold Angle Select:
           <input id="hold-click-checkbox" type="checkbox" defaultChecked onChange={props.handleAngleSelectionChange} />
       </label>
-      <label className="centered">
+      <label className="centered large-print">
           Trigonometric Functions
       </label>
       <label className="centered">
@@ -36,7 +36,7 @@ function SettingsMenu(props) {
           csc:
           <input id="csc-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
       </label>
-      <label className="centered">
+      <label className="centered large-print">
           Unit Circle Details
       </label>
       <label className="centered">
@@ -47,7 +47,7 @@ function SettingsMenu(props) {
           Radians:
           <input id="radian-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
       </label>
-      <label className="centered underlined"style={{paddingBottom: "1em"}}>
+      <label className="centered small-print underlined"style={{paddingBottom: "1em"}}>
           Pi:
           <input id="pi-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
           Quadrants:
