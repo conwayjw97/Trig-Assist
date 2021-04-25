@@ -72,15 +72,15 @@ export default class CanvasDrawer {
     }
   }
 
-  drawAngleLine(angle){
-    const [lineEndX, lineEndY] = this.circle.circleEndCoords(angle);
+  drawAngleLine(radians){
+    const [lineEndX, lineEndY] = this.circle.circleEndCoords(radians);
     const circleCentreX = this.circle.centreX;
     const circleCentreY = this.circle.centreY;
     const radius = this.circle.radius;
 
     this.ctx.lineWidth = 2;
 
-    // Draw angle line
+    // Draw radians line
     this.ctx.strokeStyle = black;
     this.ctx.beginPath();
     this.ctx.moveTo(circleCentreX, circleCentreY);
@@ -102,7 +102,7 @@ export default class CanvasDrawer {
     }
 
     // Draw sec line
-    const secLineLen = (1/Math.cos(angle)) * radius;
+    const secLineLen = (1/Math.cos(radians)) * radius;
     const secLineEndX = circleCentreX + secLineLen;
     if(this.trigVisible.sec){
       this.ctx.moveTo(circleCentreX, circleCentreY);
@@ -110,7 +110,7 @@ export default class CanvasDrawer {
     }
 
     // Draw cosec line
-    const cosecLineLen = (1/Math.sin(angle)) * radius;
+    const cosecLineLen = (1/Math.sin(radians)) * radius;
     const cosecLineEndY = circleCentreY - cosecLineLen;
     if(this.trigVisible.csc){
       this.ctx.moveTo(circleCentreX, circleCentreY);
@@ -131,52 +131,52 @@ export default class CanvasDrawer {
 
     this.ctx.stroke();
 
-    // Write angle value
+    // Write radians value
     this.ctx.font = "20px Consolas";
     this.ctx.fillStyle = white;
-    this.textAlignOutwards(angle);
-    this.ctx.fillText(radToDeg(angle).toFixed(2) + "°", lineEndX, lineEndY);
+    this.textAlignOutwards(radians);
+    this.ctx.fillText(radToDeg(radians).toFixed(2) + "°", lineEndX, lineEndY);
 
     this.ctx.fillStyle = green;
 
     // Write cos values
     if(this.trigVisible.cos){
-      this.textAlignTopBottomInwards(angle);
-      this.ctx.fillText(Math.cos(angle).toFixed(2), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
+      this.textAlignTopBottomInwards(radians);
+      this.ctx.fillText(Math.cos(radians).toFixed(2), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
     }
 
     // Write sin values
     if(this.trigVisible.sin){
-      this.textAlignRightLeftInwards(angle);
-      this.ctx.fillText(Math.sin(angle).toFixed(2), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
+      this.textAlignRightLeftInwards(radians);
+      this.ctx.fillText(Math.sin(radians).toFixed(2), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
     }
 
     // Write sec values
     if(this.trigVisible.sec){
-      this.textAlignTopBottomInwards(angle);
-      this.ctx.fillText((1/Math.cos(angle)).toFixed(2), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
+      this.textAlignTopBottomInwards(radians);
+      this.ctx.fillText((1/Math.cos(radians)).toFixed(2), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
     }
 
     // Write cosec values
     if(this.trigVisible.csc){
-      this.textAlignRightLeftInwards(angle);
-      this.ctx.fillText((1/Math.sin(angle)).toFixed(2), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
+      this.textAlignRightLeftInwards(radians);
+      this.ctx.fillText((1/Math.sin(radians)).toFixed(2), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
     }
 
     // Write tan values
     if(this.trigVisible.tan){
-      this.textAlignOutwards(angle);
+      this.textAlignOutwards(radians);
       const lineEndXToSecLineEndX = secLineEndX-lineEndX;
       const lineEndYToSecLineEndY = circleCentreY-lineEndY;
-      this.ctx.fillText(Math.tan(angle).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
+      this.ctx.fillText(Math.tan(radians).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
     }
 
     // Write cotan values
     if(this.trigVisible.cot){
-      this.textAlignOutwards(angle);
+      this.textAlignOutwards(radians);
       const lineEndXToCosecLineEndX = lineEndX-circleCentreX;
       const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
-      this.ctx.fillText(Math.atan(angle).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+      this.ctx.fillText(Math.atan(radians).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
     }
   }
 
@@ -326,7 +326,7 @@ export default class CanvasDrawer {
     }
 
     // Write quadtrants
-    if(this.circleDetails.qudarants){
+    if(this.circleDetails.quadrants){
       this.ctx.fillStyle = black;
       this.ctx.font = "17.5px Consolas";
       this.ctx.textAlign = "start";
@@ -355,16 +355,20 @@ export default class CanvasDrawer {
 
       let diffX = mouseX - circleCentreX;
       let diffY = mouseY - circleCentreY;
-      let angle = -Math.atan2(diffY, diffX);
+      let radians = -Math.atan2(diffY, diffX);
 
       // The atan2 function returns negative radian values below 0, we want to show
       // the degrees in the range of [0, 2*Math.PI] so if the degree is negative then
       // just extract it from 2*Math.PI
-      if(angle < 0){
-        angle = (Math.PI * 2) + angle;
+      if(radians < 0){
+        radians = (Math.PI * 2) + radians;
       }
 
-      this.drawAngleLine(angle);
+      this.drawAngleLine(radians);
+
+      return radians;
     }
+
+    return null;
   }
 }

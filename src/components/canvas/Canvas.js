@@ -22,7 +22,8 @@ function Canvas(props) {
       }
       canvas.onmousemove = (e) => {
         if(mouseDown){
-          canvasDrawer.onMouseMove(e);
+          const newRadians = canvasDrawer.onMouseMove(e);
+          props.handleGraphRadianChange(newRadians);
         }
       }
       canvas.onmouseup = (e) => {

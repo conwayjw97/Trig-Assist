@@ -31,19 +31,23 @@ function App() {
   });
   const [updateCount, setUpdateCount] = useState(0);
 
+  const updateTrigValues = (radians) => {
+    setTrigValues({
+      "cos": Math.cos(degToRad(radians)).toFixed(5),
+      "sin": Math.sin(degToRad(radians)).toFixed(5),
+      "tan": Math.tan(degToRad(radians)).toFixed(5),
+      "cot": Math.atan(degToRad(radians)).toFixed(5),
+      "sec": (1/Math.cos(degToRad(radians))).toFixed(5),
+      "csc": (1/Math.sin(degToRad(radians))).toFixed(5),
+    });
+  }
+
   const handleDegreeAngleChange = (event) => {
     const input = event.target.value;
     if(parseInt(input) >= 0 && parseInt(input) <= 360){
       setDegreeAngle(input);
       setRadianAngle(degToRad(input).toFixed(5));
-      setTrigValues({
-        "cos": Math.cos(degToRad(input)).toFixed(5),
-        "sin": Math.sin(degToRad(input)).toFixed(5),
-        "tan": Math.tan(degToRad(input)).toFixed(5),
-        "cot": Math.atan(degToRad(input)).toFixed(5),
-        "sec": 1/Math.cos(degToRad(input)).toFixed(5),
-        "csc": 1/Math.sin(degToRad(input)).toFixed(5),
-      });
+      updateTrigValues(input);
     }
     else{
       console.log("ANGLE OUT OF BOUNDS");
@@ -54,14 +58,13 @@ function App() {
     const input = event.target.value;
     setRadianAngle(input);
     setDegreeAngle(radToDeg(input).toFixed(0));
-    setTrigValues({
-      "cos": Math.cos(input).toFixed(5),
-      "sin": Math.sin(input).toFixed(5),
-      "tan": Math.tan(input).toFixed(5),
-      "cot": Math.atan(input).toFixed(5),
-      "sec": 1/Math.cos(input).toFixed(5),
-      "csc": 1/Math.sin(input).toFixed(5),
-    });
+    updateTrigValues(input);
+  }
+
+  const handleGraphRadianChange = (radians) => {
+    setRadianAngle(radians);
+    setDegreeAngle(radToDeg(radians).toFixed(0));
+    updateTrigValues(radians);
   }
 
   const handleUpdateClicked = (event) => {
@@ -121,22 +124,23 @@ function App() {
 
   return (
     <div className="App">
-      <div className="settings-menu"> 
+      <div className="settings-menu">
         <SettingsMenu
           degreeAngle={degreeAngle}
           radianAngle={radianAngle}
+          trigValues={trigValues}
           handleDegreeAngleChange={handleDegreeAngleChange}
           handleRadianAngleChange={handleRadianAngleChange}
           handleUpdateClicked={handleUpdateClicked}
           handleAngleSelectionChange={handleAngleSelectionChange}
           handleTrigSelectionChange={handleTrigSelectionChange}
           handleCircleDetailChange={handleCircleDetailChange}
-          trigValues={trigValues}
           />
       </div>
       <div className="values-menu">
         <ValuesMenu
           radianAngle={radianAngle}
+          trigValues={trigValues}
           handleUpdateClicked={handleUpdateClicked}
           />
       </div>
@@ -145,6 +149,7 @@ function App() {
         angleSelect={angleSelect}
         trigVisible={trigVisible}
         circleDetails={circleDetails}
+        handleGraphRadianChange={handleGraphRadianChange}
         updateCount={updateCount}
         />
     </div>
