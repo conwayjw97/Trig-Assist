@@ -4,7 +4,7 @@ import "../Menu.css";
 
 function SettingsMenu(props) {
   return (
-    <Menu className="settings-menu" left noOverlay disableAutoFocus isOpen width={375}>
+    <Menu noOverlay disableAutoFocus isOpen width={375}>
       <button onClick={props.handleUpdateClicked} className="wide-button">Update</button>
       <label className="centered underlined" style={{padding: "1em 0"}}>
           θ:

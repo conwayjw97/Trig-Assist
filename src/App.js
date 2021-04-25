@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Canvas from './components/canvas/Canvas.js';
 import SettingsMenu from './components/settings_menu/SettingsMenu.js';
+import ValuesMenu from './components/values_menu/ValuesMenu.js';
 import './App.css';
 
 import {
@@ -120,17 +121,25 @@ function App() {
 
   return (
     <div className="App">
-      <SettingsMenu
-        degreeAngle={degreeAngle}
-        radianAngle={radianAngle}
-        handleDegreeAngleChange={handleDegreeAngleChange}
-        handleRadianAngleChange={handleRadianAngleChange}
-        handleUpdateClicked={handleUpdateClicked}
-        handleAngleSelectionChange={handleAngleSelectionChange}
-        handleTrigSelectionChange={handleTrigSelectionChange}
-        handleCircleDetailChange={handleCircleDetailChange}
-        trigValues={trigValues}
-        />
+      <div className="settings-menu"> 
+        <SettingsMenu
+          degreeAngle={degreeAngle}
+          radianAngle={radianAngle}
+          handleDegreeAngleChange={handleDegreeAngleChange}
+          handleRadianAngleChange={handleRadianAngleChange}
+          handleUpdateClicked={handleUpdateClicked}
+          handleAngleSelectionChange={handleAngleSelectionChange}
+          handleTrigSelectionChange={handleTrigSelectionChange}
+          handleCircleDetailChange={handleCircleDetailChange}
+          trigValues={trigValues}
+          />
+      </div>
+      <div className="values-menu">
+        <ValuesMenu
+          radianAngle={radianAngle}
+          handleUpdateClicked={handleUpdateClicked}
+          />
+      </div>
       <Canvas
         radianAngle={radianAngle}
         angleSelect={angleSelect}

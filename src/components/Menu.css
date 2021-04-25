@@ -1,9 +1,17 @@
 /* Position and sizing of burger button */
-.bm-burger-button {
+.settings-menu .bm-burger-button {
   position: fixed;
   width: 36px;
   height: 30px;
   left: 36px;
+  top: 36px;
+}
+
+.values-menu .bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  right: 36px;
   top: 36px;
 }
 
