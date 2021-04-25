@@ -1,0 +1,139 @@
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: fixed;
+  width: 36px;
+  height: 30px;
+  left: 36px;
+  top: 36px;
+}
+
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: rgb(161, 161, 161);
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: rgb(255, 255, 255);
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: rgb(255, 255, 255);
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: rgb(64, 70, 84);
+  font: 20px Consolas;
+  padding: 1em 1em 0;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: rgb(161, 161, 161);
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  /* color: rgb(40, 44, 52); */
+  /* padding: 0.8em; */
+}
+
+/* Individual item */
+.bm-item {
+  display: inline-block;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Labels */
+label {
+  color: rgb(255, 255, 255);
+}
+
+label.centered {
+  padding-top: 1em;
+  text-align: center;
+}
+
+label.underlined {
+  border-bottom: 1px solid black;
+}
+
+/* Text Fields */
+input[type=text] {
+  height: 100%;
+  display: inline-block;
+  border: 0;
+  border-radius: 4px;
+  font: 20px Consolas;
+}
+
+input[type=text]:focus{
+    outline: none;
+}
+
+input[type=text].small-input {
+  width: 2em;
+}
+
+input[type=text].medium-input {
+  width: 4em;
+}
+
+/* Checkboxes */
+input[type=checkbox] {
+  margin-right: 1em;
+}
+
+/* Buttons */
+button.wide-button {
+  transition-duration: 0.3s;
+  color: rgb(255, 255, 255);
+  background-color: rgb(40, 44, 52);
+  font: 20px Consolas;
+  border: 0;
+  border-radius: 4px;
+  margin: 0 1em;
+  width: 85%;
+  height: 2em;
+}
+
+button.wide-button:hover {
+  background-color: rgb(255, 255, 255);
+  color: rgb(40, 44, 52);
+}
