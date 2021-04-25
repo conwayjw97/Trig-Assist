@@ -33,12 +33,12 @@ function App() {
 
   const updateTrigValues = (radians) => {
     setTrigValues({
-      "cos": Math.cos(degToRad(radians)).toFixed(5),
-      "sin": Math.sin(degToRad(radians)).toFixed(5),
-      "tan": Math.tan(degToRad(radians)).toFixed(5),
-      "cot": Math.atan(degToRad(radians)).toFixed(5),
-      "sec": (1/Math.cos(degToRad(radians))).toFixed(5),
-      "csc": (1/Math.sin(degToRad(radians))).toFixed(5),
+      "cos": Math.cos(radians).toFixed(5),
+      "sin": Math.sin(radians).toFixed(5),
+      "tan": Math.tan(radians).toFixed(5),
+      "cot": Math.atan(radians).toFixed(5),
+      "sec": (1/Math.cos(radians)).toFixed(5),
+      "csc": (1/Math.sin(radians)).toFixed(5),
     });
   }
 
@@ -47,7 +47,7 @@ function App() {
     if(parseInt(input) >= 0 && parseInt(input) <= 360){
       setDegreeAngle(input);
       setRadianAngle(degToRad(input).toFixed(5));
-      updateTrigValues(input);
+      updateTrigValues(degToRad(input));
     }
     else{
       console.log("ANGLE OUT OF BOUNDS");
