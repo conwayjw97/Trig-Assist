@@ -144,25 +144,25 @@ export default class CanvasDrawer {
     // Write cos values
     if(this.trigVisible.cos){
       this.textAlignTopBottomInwards(radians);
-      this.ctx.fillText(Math.cos(radians).toFixed(2), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
+      this.ctx.fillText(Math.abs(Math.cos(radians).toFixed(2)), lineEndX+((circleCentreX-lineEndX)/2), lineEndY);
     }
 
     // Write sin values
     if(this.trigVisible.sin){
       this.textAlignRightLeftInwards(radians);
-      this.ctx.fillText(Math.sin(radians).toFixed(2), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
+      this.ctx.fillText(Math.abs(Math.sin(radians).toFixed(2)), lineEndX, lineEndY+((circleCentreY-lineEndY)/2));
     }
 
     // Write sec values
     if(this.trigVisible.sec){
       this.textAlignTopBottomInwards(radians);
-      this.ctx.fillText((1/Math.cos(radians)).toFixed(2), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
+      this.ctx.fillText(Math.abs((1/Math.cos(radians)).toFixed(2)), secLineEndX+((circleCentreX-secLineEndX)/2), circleCentreY);
     }
 
     // Write cosec values
     if(this.trigVisible.csc){
       this.textAlignRightLeftInwards(radians);
-      this.ctx.fillText((1/Math.sin(radians)).toFixed(2), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
+      this.ctx.fillText(Math.abs((1/Math.sin(radians)).toFixed(2)), circleCentreX, cosecLineEndY+((circleCentreY-cosecLineEndY)/2));
     }
 
     // Write tan values
@@ -170,7 +170,7 @@ export default class CanvasDrawer {
       this.textAlignOutwards(radians);
       const lineEndXToSecLineEndX = secLineEndX-lineEndX;
       const lineEndYToSecLineEndY = circleCentreY-lineEndY;
-      this.ctx.fillText(Math.tan(radians).toFixed(2), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
+      this.ctx.fillText(Math.abs(Math.tan(radians).toFixed(2)), lineEndX+(lineEndXToSecLineEndX/2), circleCentreY-lineEndYToSecLineEndY/2);
     }
 
     // Write cotan values
@@ -178,7 +178,7 @@ export default class CanvasDrawer {
       this.textAlignOutwards(radians);
       const lineEndXToCosecLineEndX = lineEndX-circleCentreX;
       const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
-      this.ctx.fillText(Math.atan(radians).toFixed(2), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+      this.ctx.fillText(Math.abs(Math.atan(radians).toFixed(2)), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
     }
   }
 
@@ -348,38 +348,32 @@ export default class CanvasDrawer {
       this.ctx.fillStyle = black;
       this.ctx.font = "17.5px Consolas";
 
+      const yOffsets = [30, 45, 60, 75, 90, 105];
+
       this.ctx.textAlign = "start";
       this.ctx.textBaseline = "bottom";
-      this.ctx.fillText("csc +", circleCentreX+30, circleCentreY-30);
-      this.ctx.fillText("sec +", circleCentreX+30, circleCentreY-45);
-      this.ctx.fillText("cot +", circleCentreX+30, circleCentreY-60);
-      this.ctx.fillText("tan +", circleCentreX+30, circleCentreY-75);
-      this.ctx.fillText("cos +", circleCentreX+30, circleCentreY-90);
-      this.ctx.fillText("sin +", circleCentreX+30, circleCentreY-105);
+      let functionSigns = ["csc +", "sec +", "cot +", "tan +", "cos +", "sin +"];
+      for(let i=0; i<functionSigns.length; i++){
+        this.ctx.fillText(functionSigns[i], circleCentreX+30, circleCentreY-yOffsets[i]);
+      }
 
       this.ctx.textAlign = "end";
-      this.ctx.fillText("csc +", circleCentreX-30, circleCentreY-30);
-      this.ctx.fillText("sec -", circleCentreX-30, circleCentreY-45);
-      this.ctx.fillText("cot -", circleCentreX-30, circleCentreY-60);
-      this.ctx.fillText("tan -", circleCentreX-30, circleCentreY-75);
-      this.ctx.fillText("cos -", circleCentreX-30, circleCentreY-90);
-      this.ctx.fillText("sin +", circleCentreX-30, circleCentreY-105);
+      functionSigns = ["csc +", "sec -", "cot -", "tan -", "cos -", "sin +"];
+      for(let i=0; i<functionSigns.length; i++){
+        this.ctx.fillText(functionSigns[i], circleCentreX-30, circleCentreY-yOffsets[i]);
+      }
 
       this.ctx.textBaseline = "top";
-      this.ctx.fillText("csc -", circleCentreX-30, circleCentreY+30);
-      this.ctx.fillText("sec -", circleCentreX-30, circleCentreY+45);
-      this.ctx.fillText("cot +", circleCentreX-30, circleCentreY+60);
-      this.ctx.fillText("tan +", circleCentreX-30, circleCentreY+75);
-      this.ctx.fillText("cos -", circleCentreX-30, circleCentreY+90);
-      this.ctx.fillText("sin -", circleCentreX-30, circleCentreY+105);
+      functionSigns = ["csc -", "sec -", "cot +", "tan +", "cos -", "sin -"];
+      for(let i=0; i<functionSigns.length; i++){
+        this.ctx.fillText(functionSigns[i], circleCentreX-30, circleCentreY+yOffsets[i]);
+      }
 
       this.ctx.textAlign = "start";
-      this.ctx.fillText("csc -", circleCentreX+30, circleCentreY+30);
-      this.ctx.fillText("sec +", circleCentreX+30, circleCentreY+45);
-      this.ctx.fillText("cot -", circleCentreX+30, circleCentreY+60);
-      this.ctx.fillText("tan -", circleCentreX+30, circleCentreY+75);
-      this.ctx.fillText("cos +", circleCentreX+30, circleCentreY+90);
-      this.ctx.fillText("sin -", circleCentreX+30, circleCentreY+105);
+      functionSigns = ["csc -", "sec +", "cot -", "tan -", "cos +", "sin -"];
+      for(let i=0; i<functionSigns.length; i++){
+        this.ctx.fillText(functionSigns[i], circleCentreX+30, circleCentreY+yOffsets[i]);
+      }
     }
   }
 
