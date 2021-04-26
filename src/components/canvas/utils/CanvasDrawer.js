@@ -12,10 +12,11 @@ const black = "rgb(40, 44, 52)";
 const grey = "rgb(135, 135, 135)";
 
 export default class CanvasDrawer {
-  constructor(ctx, width, height, trigVisible, circleDetails) {
+  constructor(ctx, width, height, angleUnit, trigVisible, circleDetails) {
     this.ctx = ctx;
     this.width = width;
     this.height = height;
+    this.angleUnit = angleUnit;
     this.trigVisible = trigVisible;
     this.circleDetails = circleDetails;
     this.radius = Math.floor(height/3);
@@ -81,7 +82,7 @@ export default class CanvasDrawer {
 
     this.ctx.lineWidth = 2;
 
-    // Draw radians line
+    // Draw angle line
     this.ctx.strokeStyle = green;
     this.ctx.beginPath();
     this.ctx.moveTo(circleCentreX, circleCentreY);
@@ -133,11 +134,20 @@ export default class CanvasDrawer {
 
     this.ctx.stroke();
 
-    // Write radians value
     this.ctx.font = "20px Consolas";
-    this.ctx.fillStyle = white;
-    this.textAlignOutwards(radians);
-    this.ctx.fillText(radToDeg(radians).toFixed(2) + "°", lineEndX, lineEndY);
+
+    // Write angle value
+    console.log(this.angleUnit);
+    if(this.angleUnit != "none"){
+      this.ctx.fillStyle = white;
+      this.textAlignOutwards(radians);
+      if(this.angleUnit == "degrees"){
+        this.ctx.fillText(radToDeg(radians).toFixed(2) + "°", lineEndX, lineEndY);
+      }
+      if(this.angleUnit == "radians"){
+        this.ctx.fillText(radians.toFixed(2), lineEndX, lineEndY);
+      }
+    }
 
     this.ctx.fillStyle = green;
 

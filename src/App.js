@@ -14,6 +14,7 @@ function App() {
   const [radianAngle, setRadianAngle] = useState(null);
   const [trigValues, setTrigValues] = useState({});
   const [angleSelect, setAngleSelect] = useState(true);
+  const [angleUnit, setAngleUnit] = useState("degrees");
   const [trigVisible, setTrigVisible] = useState({
     "cos": true,
     "sin": true,
@@ -79,6 +80,21 @@ function App() {
     setUpdateCount(updateCount + 1);
   }
 
+  const handleAngleUnitChange = (event) => {
+    switch(event.target.value){
+      case "degrees":
+        setAngleUnit("degrees");
+        break;
+      case "radians":
+        setAngleUnit("radians");
+        break;
+      case "none":
+        setAngleUnit("none");
+        break;
+    }
+    setUpdateCount(updateCount + 1);
+  }
+
   const handleTrigSelectionChange = (event) => {
     const newTrigVisible = trigVisible;
     switch(event.target.id){
@@ -141,6 +157,7 @@ function App() {
           handleDegreeAngleChange={handleDegreeAngleChange}
           handleRadianAngleChange={handleRadianAngleChange}
           handleAngleSelectionChange={handleAngleSelectionChange}
+          handleAngleUnitChange={handleAngleUnitChange}
           handleTrigSelectionChange={handleTrigSelectionChange}
           handleCircleDetailChange={handleCircleDetailChange}
           />
@@ -154,6 +171,7 @@ function App() {
       <Canvas
         radianAngle={radianAngle}
         angleSelect={angleSelect}
+        angleUnit={angleUnit}
         trigVisible={trigVisible}
         circleDetails={circleDetails}
         handleGraphRadianChange={handleGraphRadianChange}
