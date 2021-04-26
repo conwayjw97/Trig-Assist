@@ -134,11 +134,10 @@ export default class CanvasDrawer {
 
     this.ctx.stroke();
 
-    this.ctx.font = "20px Consolas";
-
     // Write angle value
     console.log(this.angleUnit);
     if(this.angleUnit != "none"){
+      this.ctx.font = "20px Consolas";
       this.ctx.fillStyle = white;
       this.textAlignOutwards(radians);
       if(this.angleUnit == "degrees"){

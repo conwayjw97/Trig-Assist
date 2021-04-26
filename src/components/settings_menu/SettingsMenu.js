@@ -41,7 +41,7 @@ function SettingsMenu(props) {
           tan:
           <input id="tan-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
       </label>
-      <label className="centered underlined" style={{paddingTop: "1em", paddingBottom: "1em"}}>
+      <label className="centered underlined" style={{padding: "1em "}}>
           cot:
           <input id="cot-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
           sec:
