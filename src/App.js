@@ -56,6 +56,7 @@ function App() {
     else{
       console.log("ANGLE OUT OF BOUNDS");
     }
+    setUpdateCount(updateCount + 1);
   }
 
   const handleRadianAngleChange = (event) => {
@@ -63,6 +64,7 @@ function App() {
     setRadianAngle(input);
     setDegreeAngle(radToDeg(input).toFixed(0));
     updateTrigValues(input);
+    setUpdateCount(updateCount + 1);
   }
 
   const handleGraphRadianChange = (radians) => {
@@ -71,12 +73,9 @@ function App() {
     updateTrigValues(radians);
   }
 
-  const handleUpdateClicked = (event) => {
-    setUpdateCount(updateCount + 1);
-  }
-
   const handleAngleSelectionChange = (event) => {
     setAngleSelect(event.target.checked);
+    setUpdateCount(updateCount + 1);
   }
 
   const handleTrigSelectionChange = (event) => {
@@ -102,6 +101,7 @@ function App() {
         break;
     }
     setTrigVisible(newTrigVisible);
+    setUpdateCount(updateCount + 1);
   }
 
   const handleCircleDetailChange = (event) => {
@@ -124,6 +124,7 @@ function App() {
         break;
     }
     setCircleDetails(newCircleDetails);
+    setUpdateCount(updateCount + 1);
   }
 
   return (
@@ -135,7 +136,6 @@ function App() {
           trigValues={trigValues}
           handleDegreeAngleChange={handleDegreeAngleChange}
           handleRadianAngleChange={handleRadianAngleChange}
-          handleUpdateClicked={handleUpdateClicked}
           handleAngleSelectionChange={handleAngleSelectionChange}
           handleTrigSelectionChange={handleTrigSelectionChange}
           handleCircleDetailChange={handleCircleDetailChange}
@@ -145,7 +145,6 @@ function App() {
         <ValuesMenu
           radianAngle={radianAngle}
           trigValues={trigValues}
-          handleUpdateClicked={handleUpdateClicked}
           />
       </div>
       <Canvas

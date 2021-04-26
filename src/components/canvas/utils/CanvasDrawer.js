@@ -7,6 +7,7 @@ import {
 
 const white = "rgb(255, 255, 255)";
 const green = "rgb(36, 173, 48)";
+const brightGreen = "rgb(25, 207, 41)"
 const black = "rgb(40, 44, 52)";
 const grey = "rgb(135, 135, 135)";
 
@@ -81,17 +82,18 @@ export default class CanvasDrawer {
     this.ctx.lineWidth = 2;
 
     // Draw radians line
-    this.ctx.strokeStyle = black;
+    this.ctx.strokeStyle = green;
     this.ctx.beginPath();
     this.ctx.moveTo(circleCentreX, circleCentreY);
     this.ctx.lineTo(lineEndX, lineEndY);
     this.ctx.stroke();
 
     // Draw trigonometric function lines
-    this.ctx.strokeStyle = green;
+    this.ctx.beginPath();
 
     // Draw sin line
     if(this.trigVisible.sin){
+      this.ctx.moveTo(lineEndX, lineEndY);
       this.ctx.lineTo(lineEndX, circleCentreY);
     }
 
@@ -189,7 +191,7 @@ export default class CanvasDrawer {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
     // Draw circle
-    this.ctx.fillStyle = "rgb(255, 255, 255)";
+    this.ctx.fillStyle = white;
     this.ctx.beginPath();
     this.ctx.arc(circleCentreX, circleCentreY, radius, degToRad(0), degToRad(360), false);
     this.ctx.fill();

@@ -5,7 +5,9 @@ import "../Menu.css";
 function SettingsMenu(props) {
   return (
     <Menu noOverlay disableAutoFocus isOpen width={375}>
-      <button onClick={props.handleUpdateClicked} className="wide-button">Update</button>
+      <label className="centered large-print">
+          Manual Input Angle Select
+      </label>
       <label className="centered large-print underlined" style={{padding: "1em 0"}}>
           θ:
           <input type="text" style={{marginLeft: "0.25em"}} value={props.degreeAngle} onChange={props.handleDegreeAngleChange} className="small-input" />

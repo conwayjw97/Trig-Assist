@@ -17,7 +17,8 @@ function Canvas(props) {
     if(props.angleSelect){
       let mouseDown = false;
       canvas.onmousedown = (e) => {
-        canvasDrawer.onMouseMove(e);
+        const newRadians = canvasDrawer.onMouseMove(e);
+        props.handleGraphRadianChange(newRadians);
         mouseDown = true;
       }
       canvas.onmousemove = (e) => {
