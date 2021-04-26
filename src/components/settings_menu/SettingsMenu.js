@@ -46,14 +46,18 @@ function SettingsMenu(props) {
           <input id="axis-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
           Degrees:
           <input id="degree-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+      </label>
+      <label className="centered">
           Radians:
           <input id="radian-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
-      </label>
-      <label className="centered small-print underlined"style={{paddingBottom: "1em"}}>
           Pi:
           <input id="pi-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+      </label>
+      <label className="centered underlined" style={{paddingBottom: "1em"}}>
           Quadrants:
           <input id="quadrant-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+          Function Signs:
+          <input id="sign-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
       </label>
     </Menu>
   );

@@ -342,6 +342,45 @@ export default class CanvasDrawer {
       this.ctx.textAlign = "start";
       this.ctx.fillText("IV", circleCentreX+5, circleCentreY+5);
     }
+
+    // Write trig function signs
+    if(this.circleDetails.signs){
+      this.ctx.fillStyle = black;
+      this.ctx.font = "17.5px Consolas";
+
+      this.ctx.textAlign = "start";
+      this.ctx.textBaseline = "bottom";
+      this.ctx.fillText("csc +", circleCentreX+30, circleCentreY-30);
+      this.ctx.fillText("sec +", circleCentreX+30, circleCentreY-45);
+      this.ctx.fillText("cot +", circleCentreX+30, circleCentreY-60);
+      this.ctx.fillText("tan +", circleCentreX+30, circleCentreY-75);
+      this.ctx.fillText("cos +", circleCentreX+30, circleCentreY-90);
+      this.ctx.fillText("sin +", circleCentreX+30, circleCentreY-105);
+
+      this.ctx.textAlign = "end";
+      this.ctx.fillText("csc +", circleCentreX-30, circleCentreY-30);
+      this.ctx.fillText("sec -", circleCentreX-30, circleCentreY-45);
+      this.ctx.fillText("cot -", circleCentreX-30, circleCentreY-60);
+      this.ctx.fillText("tan -", circleCentreX-30, circleCentreY-75);
+      this.ctx.fillText("cos -", circleCentreX-30, circleCentreY-90);
+      this.ctx.fillText("sin +", circleCentreX-30, circleCentreY-105);
+
+      this.ctx.textBaseline = "top";
+      this.ctx.fillText("csc -", circleCentreX-30, circleCentreY+30);
+      this.ctx.fillText("sec -", circleCentreX-30, circleCentreY+45);
+      this.ctx.fillText("cot +", circleCentreX-30, circleCentreY+60);
+      this.ctx.fillText("tan +", circleCentreX-30, circleCentreY+75);
+      this.ctx.fillText("cos -", circleCentreX-30, circleCentreY+90);
+      this.ctx.fillText("sin -", circleCentreX-30, circleCentreY+105);
+
+      this.ctx.textAlign = "start";
+      this.ctx.fillText("csc -", circleCentreX+30, circleCentreY+30);
+      this.ctx.fillText("sec +", circleCentreX+30, circleCentreY+45);
+      this.ctx.fillText("cot -", circleCentreX+30, circleCentreY+60);
+      this.ctx.fillText("tan -", circleCentreX+30, circleCentreY+75);
+      this.ctx.fillText("cos +", circleCentreX+30, circleCentreY+90);
+      this.ctx.fillText("sin -", circleCentreX+30, circleCentreY+105);
+    }
   }
 
   onMouseMove(e){

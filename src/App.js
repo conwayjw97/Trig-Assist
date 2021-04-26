@@ -28,6 +28,7 @@ function App() {
     "radians": true,
     "pi": true,
     "quadrants": true,
+    "signs": true,
   });
   const [updateCount, setUpdateCount] = useState(0);
 
@@ -121,6 +122,9 @@ function App() {
         break;
       case "quadrant-checkbox":
         newCircleDetails.quadrants = event.target.checked;
+        break;
+      case "sign-checkbox":
+        newCircleDetails.signs = event.target.checked;
         break;
     }
     setCircleDetails(newCircleDetails);
