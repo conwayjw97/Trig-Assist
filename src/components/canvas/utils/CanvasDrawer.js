@@ -2,7 +2,8 @@ import Circle from "./Circle.js";
 
 import {
   degToRad,
-  radToDeg
+  radToDeg,
+  radToFrac
 } from "../../../utils/angleCalc.js";
 
 const white = "rgb(255, 255, 255)";
@@ -75,6 +76,7 @@ export default class CanvasDrawer {
   }
 
   drawAngleLine(radians){
+    console.log(radToFrac(radians));
     const [lineEndX, lineEndY] = this.circle.circleEndCoords(radians);
     const circleCentreX = this.circle.centreX;
     const circleCentreY = this.circle.centreY;
@@ -135,7 +137,6 @@ export default class CanvasDrawer {
     this.ctx.stroke();
 
     // Write angle value
-    console.log(this.angleUnit);
     if(this.angleUnit != "none"){
       this.ctx.font = "20px Consolas";
       this.ctx.fillStyle = white;
