@@ -133,17 +133,23 @@ export default class CanvasDrawer {
     }
 
     this.ctx.stroke();
+    
+    this.ctx.font = "20px Consolas";
 
     // Write angle value
     if(this.angleUnit != "none"){
-      this.ctx.font = "20px Consolas";
       this.ctx.fillStyle = white;
       this.textAlignOutwards(radians);
       if(this.angleUnit == "degrees"){
         this.ctx.fillText(radToDeg(radians).toFixed(2) + "°", lineEndX, lineEndY);
       }
       if(this.angleUnit == "radians"){
-        this.ctx.fillText(radians.toFixed(2), lineEndX, lineEndY);
+        if(radians % 1 != 0){
+          this.ctx.fillText(radians.toFixed(5), lineEndX, lineEndY);
+        }
+        else{
+          this.ctx.fillText(radians, lineEndX, lineEndY);
+        }
       }
     }
 
