@@ -9,8 +9,7 @@ function Canvas(props) {
   const height = window.innerHeight;
 
   useEffect(() => {
-    const canvas = canvas.current;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.current.getContext("2d");
     const canvasDrawer = new CanvasDrawer(ctx, width, height, props.angleUnit, props.trigVisible, props.circleDetails);
 
     if(!canvasLoaded.current){
@@ -19,29 +18,29 @@ function Canvas(props) {
     }
 
     if(props.radianAngle != null){
-      canvasDrawer.drawAngleLine(props.radianAngle);
+      canvasDrawer.drawAngleLine(parseFloat(props.radianAngle));
     }
     if(props.angleSelect){
       let mouseDown = false;
-      canvas.onmousedown = (e) => {
+      canvas.current.onmousedown = (e) => {
         const newRadians = canvasDrawer.onMouseMove(e);
         props.handleGraphRadianChange(newRadians);
         mouseDown = true;
       }
-      canvas.onmousemove = (e) => {
+      canvas.current.onmousemove = (e) => {
         if(mouseDown){
           const newRadians = canvasDrawer.onMouseMove(e);
           props.handleGraphRadianChange(newRadians);
         }
       }
-      canvas.onmouseup = (e) => {
+      canvas.current.onmouseup = (e) => {
         mouseDown = false;
       }
     }
     else{
-      canvas.onmousedown = null;
-      canvas.onmousemove = null;
-      canvas.onmouseup = null;
+      canvas.current.onmousedown = null;
+      canvas.current.onmousemove = null;
+      canvas.current.onmouseup = null;
     }
   }, [props.updateCount]);
 

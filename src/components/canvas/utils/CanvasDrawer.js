@@ -144,6 +144,7 @@ export default class CanvasDrawer {
         this.ctx.fillText(radToDeg(radians).toFixed(2) + "°", lineEndX, lineEndY);
       }
       if(this.angleUnit == "radians"){
+        console.log(radians);
         if(radians % 1 != 0){
           this.ctx.fillText(radians.toFixed(5), lineEndX, lineEndY);
         }
