@@ -5,42 +5,43 @@ import "./Canvas.css";
 function Canvas(props) {
   const canvas = useRef(null);
   const canvasLoaded = useRef(false);
-  const canvasDrawer = useRef(null);
   const width = window.innerWidth;
   const height = window.innerHeight;
 
   useEffect(() => {
+    const canvas = canvas.current;
+    const ctx = canvas.getContext("2d");
+    const canvasDrawer = new CanvasDrawer(ctx, width, height, props.angleUnit, props.trigVisible, props.circleDetails);
+
     if(!canvasLoaded.current){
-      const ctx = canvas.current.getContext("2d");
-      canvasDrawer.current = new CanvasDrawer(ctx, width, height, props.angleUnit, props.trigVisible, props.circleDetails);
+      canvasDrawer.fadeIn();
       canvasLoaded.current = true;
     }
 
     if(props.radianAngle != null){
-      canvasDrawer.current.resetCanvas();
-      canvasDrawer.current.drawAngleLine(props.radianAngle);
+      canvasDrawer.drawAngleLine(props.radianAngle);
     }
     if(props.angleSelect){
       let mouseDown = false;
-      canvas.current.onmousedown = (e) => {
-        const newRadians = canvasDrawer.current.onMouseMove(e);
+      canvas.onmousedown = (e) => {
+        const newRadians = canvasDrawer.onMouseMove(e);
         props.handleGraphRadianChange(newRadians);
         mouseDown = true;
       }
-      canvas.current.onmousemove = (e) => {
+      canvas.onmousemove = (e) => {
         if(mouseDown){
-          const newRadians = canvasDrawer.current.onMouseMove(e);
+          const newRadians = canvasDrawer.onMouseMove(e);
           props.handleGraphRadianChange(newRadians);
         }
       }
-      canvas.current.onmouseup = (e) => {
+      canvas.onmouseup = (e) => {
         mouseDown = false;
       }
     }
     else{
-      canvas.current.onmousedown = null;
-      canvas.current.onmousemove = null;
-      canvas.current.onmouseup = null;
+      canvas.onmousedown = null;
+      canvas.onmousemove = null;
+      canvas.onmouseup = null;
     }
   }, [props.updateCount]);
 

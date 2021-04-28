@@ -21,7 +21,7 @@ export default class CanvasDrawer {
     this.circleDetails = circleDetails;
     this.radius = Math.floor(height/3);
     this.circle = new Circle(this.width/2, this.height/2, this.width, this.height, this.radius);
-    this.fadeIn();
+    this.resetCanvas();
   }
 
   textAlignOutwards(radians){
