@@ -21,7 +21,7 @@ export default class CanvasDrawer {
     this.circleDetails = circleDetails;
     this.radius = Math.floor(height/3);
     this.circle = new Circle(this.width/2, this.height/2, this.width, this.height, this.radius);
-    this.resetCanvas();
+    this.fadeIn();
   }
 
   textAlignOutwards(radians){
@@ -133,7 +133,7 @@ export default class CanvasDrawer {
     }
 
     this.ctx.stroke();
-    
+
     this.ctx.font = "20px Consolas";
 
     // Write angle value
@@ -389,6 +389,21 @@ export default class CanvasDrawer {
         this.ctx.fillText(functionSigns[i], circleCentreX+30, circleCentreY+yOffsets[i]);
       }
     }
+  }
+
+  async fadeIn(){
+    const timer = ms => new Promise(res => setTimeout(res, ms));
+    let alpha = 0;
+    let delta = 0.02;
+
+    while(alpha < 1.0){
+      this.ctx.globalAlpha = alpha;
+      this.resetCanvas();
+      alpha += delta;
+      await timer(10);
+    }
+
+    this.ctx.globalAlpha = 1;
   }
 
   onMouseMove(e){

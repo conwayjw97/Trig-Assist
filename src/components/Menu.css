@@ -15,6 +15,12 @@
   top: 36px;
 }
 
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+}
+
 /* Color/shape of burger icon bars */
 .bm-burger-bars {
   background: rgb(161, 161, 161);
@@ -23,12 +29,6 @@
 /* Color/shape of burger icon bars on hover*/
 .bm-burger-bars-hover {
   background: rgb(255, 255, 255);
-}
-
-/* Position and sizing of clickable cross button */
-.bm-cross-button {
-  height: 24px;
-  width: 24px;
 }
 
 /* Color/shape of close button cross */
@@ -59,8 +59,6 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /* Wrapper for item list */
 .bm-item-list {
-  /* color: rgb(40, 44, 52); */
-  /* padding: 0.8em; */
 }
 
 /* Individual item */
@@ -112,7 +110,7 @@ input[type=text] {
   display: inline-block;
   border: 0;
   border-radius: 4px;
-  font: 20px Consolas;
+  font: 18px Consolas;
 }
 
 input[type=text]:focus{
@@ -125,6 +123,15 @@ input[type=text].small-input {
 
 input[type=text].medium-input {
   width: 4em;
+}
+
+/* Dropdowns */
+select {
+  height: 100%;
+  display: inline-block;
+  border: 0;
+  border-radius: 4px;
+  font: 18px Consolas;
 }
 
 /* Checkboxes */

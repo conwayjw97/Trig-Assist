@@ -22,7 +22,7 @@ function SettingsMenu(props) {
       </label>
 
       <label className="centered large-print underlined" style={{padding: "1em 0"}}>
-          Angle Value:
+          Angle Unit:
           <select id="angle-value-dropdown" style={{marginLeft: "0.25em"}} onChange={props.handleAngleUnitChange}>
             <option value="degrees">Degrees</option>
             <option value="radians">Radians</option>
