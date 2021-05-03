@@ -42,7 +42,7 @@ function App() {
       "cos": Math.cos(radians).toFixed(5),
       "sin": Math.sin(radians).toFixed(5),
       "tan": Math.tan(radians).toFixed(5),
-      "cot": Math.atan(radians).toFixed(5),
+      "cot": (1/Math.tan(radians)).toFixed(5),
       "sec": (1/Math.cos(radians)).toFixed(5),
       "csc": (1/Math.sin(radians)).toFixed(5),
     });

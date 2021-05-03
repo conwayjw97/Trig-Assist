@@ -192,8 +192,8 @@ export default class CanvasDrawer {
     if(this.trigVisible.cot){
       this.textAlignOutwards(radians);
       const lineEndXToCosecLineEndX = lineEndX-circleCentreX;
-      const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY
-      this.ctx.fillText(Math.abs(Math.atan(radians).toFixed(2)), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
+      const lineEndYToCosecLineEndY = lineEndY-cosecLineEndY;
+      this.ctx.fillText(Math.abs((1/Math.tan(radians)).toFixed(2)), lineEndX-(lineEndXToCosecLineEndX/2), lineEndY-(lineEndYToCosecLineEndY/2));
     }
   }
 

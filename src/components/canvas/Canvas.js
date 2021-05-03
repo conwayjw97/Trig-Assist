@@ -24,13 +24,17 @@ function Canvas(props) {
       let mouseDown = false;
       canvas.current.onmousedown = (e) => {
         const newRadians = canvasDrawer.onMouseMove(e);
-        props.handleGraphRadianChange(newRadians);
+        if(newRadians != null){
+          props.handleGraphRadianChange(newRadians);
+        }
         mouseDown = true;
       }
       canvas.current.onmousemove = (e) => {
         if(mouseDown){
           const newRadians = canvasDrawer.onMouseMove(e);
-          props.handleGraphRadianChange(newRadians);
+          if(newRadians != null){
+            props.handleGraphRadianChange(newRadians);
+          }
         }
       }
       canvas.current.onmouseup = (e) => {
