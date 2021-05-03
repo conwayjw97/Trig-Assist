@@ -86,6 +86,16 @@ Note: Beware of modifying this element as it can break the animations - you shou
   background: #555;
 }
 
+/* Divs */
+div.centered {
+  padding-top: 1em;
+  text-align: center;
+}
+
+div.underlined {
+  border-bottom: 1px solid black;
+}
+
 /* Labels */
 label {
   color: rgb(255, 255, 255);

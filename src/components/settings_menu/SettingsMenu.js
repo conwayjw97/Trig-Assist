@@ -33,44 +33,68 @@ function SettingsMenu(props) {
       <label className="centered large-print">
           Trigonometric Functions
       </label>
-      <label className="centered">
+      <div className="centered" style={{whitespace: "nowrap"}}>
+        <label>
           cos:
           <input id="cos-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
+        </label>
+        <label>
           sin:
           <input id="sin-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
+        </label>
+        <label>
           tan:
           <input id="tan-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
-      </label>
-      <label className="centered underlined" style={{padding: "1em"}}>
+        </label>
+      </div>
+      <div className="centered underlined" style={{whitespace: "nowrap", padding: "1em"}}>
+        <label>
           cot:
           <input id="cot-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
+        </label>
+        <label>
           sec:
           <input id="sec-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
+        </label>
+        <label>
           csc:
           <input id="csc-checkbox" type="checkbox" defaultChecked onChange={props.handleTrigSelectionChange} />
-      </label>
+        </label>
+      </div>
 
       <label className="centered large-print">
           Unit Circle Details
       </label>
-      <label className="centered">
+      <div className="centered" style={{whitespace: "nowrap"}}>
+        <label>
           Axes:
           <input id="axis-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+        </label>
+        <label>
           Degrees:
           <input id="degree-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
-      </label>
-      <label className="centered">
+        </label>
+      </div>
+      <div className="centered" style={{whitespace: "nowrap"}}>
+        <label>
           Radians:
           <input id="radian-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+        </label>
+        <label>
           Pi:
           <input id="pi-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
-      </label>
-      <label className="centered underlined" style={{paddingBottom: "1em"}}>
+        </label>
+      </div>
+      <div className="centered underlined" style={{whitespace: "nowrap", paddingBottom: "1em"}}>
+        <label>
           Quadrants:
           <input id="quadrant-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
+        </label>
+        <label>
           Function Signs:
           <input id="sign-checkbox" type="checkbox" defaultChecked onChange={props.handleCircleDetailChange} />
-      </label>
+        </label>
+      </div>
     </Menu>
   );
 }
